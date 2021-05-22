@@ -8,16 +8,9 @@ const Search = () => {
     }
 
     return (
-        <form onSubmit={handleSubmit} className="flex flex-row text-black">
-            {/* <div className="">
-                <label htmlFor="categoria"></label> */}
-                <select id='categoria' name='categoria'>
-                    <option value='hogar'>Hogar</option>
-                    <option value='deporte'>Deporte</option>
-                </select>
-            {/* </div> */}
-            <input type="input" ref={inputRef} defaultValue="Search" className=" w-60 focus:outline-none rounded-xl pl-2 py-1 text-black"/>
-            <button type="submit" className="bg-yellow-700 rounded-r-xl w-18 px-4 relative right-12">Buscar</button>
+        <form onSubmit={handleSubmit} className="flex flex-row flex-grow text-blueGray-900 h-1/2 mx-6">
+            <input type="input" ref={inputRef} defaultValue="Search" className="w-full focus:outline-none rounded-xl pl-4 py-2 text-blueGray-900 bg-blueGray-100"/>
+            <button type="submit" className="theme rounded-r-xl w-20 px-6 relative right-12 text-blueGray-200 focus:outline-none"><i className="fas fa-search"></i></button>
         </form>
     )
 }

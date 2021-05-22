@@ -1,11 +1,10 @@
-import { useContext, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import logo from "../img/LogoSinFondo.png"
 import Search from './Search'
 import { Link, useLocation } from "react-router-dom";
-import { currentLocationContext } from '../context/CurrentLocationContext';
 
 const Nav = () => {
-    const { navHidden } = useContext(currentLocationContext)
+    // const { navHidden } = useContext(currentLocationContext)
     const [display, setDisplay] = useState("flex")
     const location = useLocation()
 

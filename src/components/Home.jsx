@@ -5,11 +5,25 @@ import powerBank from "../img/powerBank.jpg";
 import tablet from "../img/tabletSamsung.jpg";
 import Producto from "./Producto";
 
+import { useEffect } from "react";
+import { useHistory } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+
 const Home = () => {
+  const historial = useHistory();
+  const notify = () => toast.success("Wow so easy !");
+
+  useEffect(() => {
+    console.log(historial);
+    if (historial.action === "PUSH") {
+      notify();
+    }
+  }, []);
+
   return (
     <main className="w-screen h-full ">
       <h2 className="text-blueGray-900 text-3xl px-10 pt-10">Ofertas</h2>
-      <section className="flex flex-row justify-around pt-6">
+      <section className="flex flex-row justify-around flex-wrap w-full pt-6">
         <Producto
           name="Smart TV Hisense 43H6500G LED 4K 43' 120V"
           precio="7,599"
@@ -40,6 +54,7 @@ const Home = () => {
           img={tablet}
         />
       </section>
+      <ToastContainer />
     </main>
   );
 };

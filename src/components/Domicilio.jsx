@@ -11,7 +11,7 @@ const Domicilio = () => {
     <section className="w-full h-full flex flex-row justify-center">
       <form
         onSubmit={handleSumbit}
-        className="flex flex-col justify-around items-center px-8 py-6 my-10 w-3/5 text-blueGray-900 bg-blueGray-100"
+        className="flex flex-col justify-around items-center px-8 py-6 my-10 md:w-3/5 w-4/5 text-blueGray-900 bg-blueGray-100"
       >
         <p className=" text-3xl pb-14 uppercase tracking-wider font-medium">
           Domicilio
@@ -103,7 +103,7 @@ const Domicilio = () => {
           <textarea
             id="indicaciones"
             name="indicaciones"
-            rows="4"
+            rows="3"
             className="border border-blueGray-500 w-full focus:outline-none p-2 mt-4"
           ></textarea>
         </div>

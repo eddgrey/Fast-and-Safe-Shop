@@ -3,7 +3,7 @@ import React from "react";
 
 const Bienvenida = ({ message }) => {
   return (
-    <div className="w-2/5 theme flex flex-col items-center justify-center">
+    <div className="w-2/5 theme hidden md:flex flex-col items-center justify-center">
       <div>
         <p className="text-lg uppercase font-extralight tracking-widest">
           Bienvenido a

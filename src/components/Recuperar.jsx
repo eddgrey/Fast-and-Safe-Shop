@@ -10,7 +10,7 @@ const Recuperar = () => {
   return (
     <section className="w-full h-screen flex flex-row bg-blueGray-800">
       <form
-        className="flex flex-col items-center px-20 pt-12 pb-14 w-3/5 text-blueGray-100 justify-around"
+        className="flex flex-col items-center px-20 pt-12 pb-14 w-full md:w-3/5 text-blueGray-100 justify-around"
         onSubmit={handleSumbit}
       >
         <h2 className=" text-3xl mb-10">Restablecer contraseña</h2>

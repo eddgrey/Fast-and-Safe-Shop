@@ -14,6 +14,7 @@ import { CurrentLocationProvaider } from "./context/CurrentLocationContext";
 import Domicilio from "./components/Domicilio";
 import Cuenta from "./components/Cuenta";
 import Categoria from "./components/Categoria";
+import Prueba from "./components/Prueba";
 
 const App = () => {
   return (
@@ -41,6 +42,7 @@ const App = () => {
             <Route path="/recuperar" component={Recuperar} />
             <Route path="/cuenta" component={Cuenta} />
             <Route path="/categoria" component={Categoria} />
+            <Route path="/prueba" component={Prueba} />
           </Switch>
         </main>
       </Router>

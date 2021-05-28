@@ -4,7 +4,6 @@ import Search from "./Search";
 import { Link, useLocation } from "react-router-dom";
 
 const Nav = () => {
-  // const { navHidden } = useContext(currentLocationContext)
   const [display, setDisplay] = useState("flex");
   const location = useLocation();
 
@@ -27,12 +26,12 @@ const Nav = () => {
     <nav
       className={`${display} flex-col max-w-screen text-blueGray-100 bg-blueGray-800 `}
     >
-      <div className="flex flex-row justify-around items-center bg-blueGray-900 min-w-full px-8 py-4 tracking-wide">
+      <div className="flex flex-row justify-around items-center bg-blueGray-900 min-w-full px-4 md:px-8 py-4 tracking-wide">
         <Link to="/">
-          <img src={logo} alt="logo" className=" h-20" />
+          <img src={logo} alt="logo" className="md:h-20 h-14" />
         </Link>
         <Search />
-        <div className="flex flex-row w-1/3 justify-between">
+        <div className="flex flex-row w-1/2 md:w-1/3 justify-between">
           <Link to="/login">
             <div className="flex flex-row">
               {/* <i className="fas fa-user fa-lg"></i> */}
@@ -47,7 +46,7 @@ const Nav = () => {
           </Link>
         </div>
       </div>
-      <div className="w-1/2 flex flex-row py-2 justify-around">
+      <div className="w-full md:w-1/2 flex flex-row py-2 px-4 justify-around">
         <Link to="/catalogo">
           <p>Categorias</p>
         </Link>
@@ -57,7 +56,9 @@ const Nav = () => {
         </Link>
         <p>Moda</p>
         <p>Vender</p>
-        <p>Ayuda</p>
+        <Link to="/Prueba">
+          <p>Ayuda</p>
+        </Link>
       </div>
     </nav>
   );

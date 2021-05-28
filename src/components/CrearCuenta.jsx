@@ -12,7 +12,7 @@ const CrearCuenta = () => {
     <section className="w-full h-screen flex flex-row bg-blueGray-800">
       <form
         onSubmit={handleSumbit}
-        className="flex flex-col justify-around items-center px-14 py-6 w-3/5 text-blueGray-100"
+        className="flex flex-col justify-around items-center px-14 py-6 w-full md:w-3/5 text-blueGray-100"
       >
         <p className=" text-3xl mb-3">Crear Cuenta</p>
 
@@ -25,16 +25,26 @@ const CrearCuenta = () => {
           size="small"
         />
 
-        <FormField id="edad" label="Edad: " type="number" size="small" />
+        <FormField
+          id="edad"
+          label="Fecha de nacimiento: "
+          type="date"
+          size="small"
+        />
 
-        <FormField id="pais" label="País: " type="input" size="small" />
-
+        <FormField
+          id="pais"
+          label="Entidad federativa: "
+          type="input"
+          size="small"
+        />
+        {/* 
         <FormField
           id="username"
           label="Nombre de usuario: "
           type="input"
           size="small"
-        />
+        /> */}
 
         <FormField
           id="email"

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const Producto = ({ name = "Nombre del producto", precio = "precio", img }) => {
   return (
-    <section className="flex flex-col justify-around bg-blueGray-100 w-1/6 px-2 pb-6">
+    <section className="flex flex-col justify-around bg-blueGray-100 w-1/2 md:w-1/6 px-2 pb-6">
       <img
         src={img}
         alt={name}

@@ -10,7 +10,7 @@ const Search = () => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex flex-row flex-grow text-blueGray-900 h-1/2 mx-6"
+      className="flex flex-row flex-grow text-blueGray-900 h-1/2 mx-4 md:mx-6"
     >
       <input
         type="input"
@@ -20,7 +20,7 @@ const Search = () => {
       />
       <button
         type="submit"
-        className="theme rounded-r-xl w-20 px-6 relative right-12 text-blueGray-200 focus:outline-none"
+        className="theme rounded-r-xl w-20 px-4 md:px-6 relative right-12 text-blueGray-200 focus:outline-none"
       >
         <i className="fas fa-search"></i>
       </button>

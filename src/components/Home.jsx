@@ -1,58 +1,33 @@
-import smartTv from "../img/smartTv.jpg";
-import laptop from "../img/laptop.jpg";
-import pocoX3 from "../img/Xiaomi_PocoX3.png";
-import powerBank from "../img/powerBank.jpg";
-import tablet from "../img/tabletSamsung.jpg";
 import Producto from "./Producto";
-
-import { useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import { useEffect, useContext } from "react";
 import { ToastContainer, toast } from "react-toastify";
+import { productosContext } from "../context/ProductosContext";
+import { messageToShowContext } from "../context/MessageToShowContext";
 
 const Home = () => {
-  const historial = useHistory();
-  const notify = () => toast.success("Wow so easy !");
+  const { productos } = useContext(productosContext);
+  const { messageToShow, setMessageToShow } = useContext(messageToShowContext);
 
   useEffect(() => {
-    console.log(historial);
-    if (historial.action === "PUSH") {
-      notify();
+    console.log(messageToShow);
+    if (messageToShow.length > 0) {
+      (() => toast.success(messageToShow))();
+      setTimeout(setMessageToShow(""), 5000);
     }
   }, []);
 
   return (
-    <main className="w-screen h-full ">
+    <main className="w-full h-full ">
       <h2 className="text-blueGray-900 text-3xl px-10 pt-10">Ofertas</h2>
       <section className="flex flex-row justify-around flex-wrap w-full pt-6">
-        <Producto
-          name="Smart TV Hisense 43H6500G LED 4K 43' 120V"
-          precio="7,599"
-          img={smartTv}
-        />
-
-        <Producto
-          name="Laptop Lenovo V-Series V14-IIL, 8GB de RAM 1TB HDD"
-          precio="12,499"
-          img={laptop}
-        />
-
-        <Producto
-          name="Xiaomi Poco X3 NFC Dual SIM 128 GB"
-          precio="5,240"
-          img={pocoX3}
-        />
-
-        <Producto
-          name="Power Bank Brillo Metálico Batería Portátil 10000mah 2.1a"
-          precio="199"
-          img={powerBank}
-        />
-
-        <Producto
-          name="Tablet Samsung Galaxy Tab A 2019 2GB de memoria RAM"
-          precio="2,825"
-          img={tablet}
-        />
+        {productos.map(({ nombreProducto, precioProducto, imgProducto }) => (
+          <Producto
+            key={nombreProducto + precioProducto}
+            nombreProducto={nombreProducto}
+            precioProducto={precioProducto}
+            imgProducto={imgProducto}
+          />
+        ))}
       </section>
       <ToastContainer />
     </main>

@@ -18,8 +18,7 @@ const FormField = ({ id, label, type, size, refInput, theme = "dark" }) => {
   ) : (
     <div className={`flex flex-col ${width} mb-12`}>
       <label htmlFor={id} className="mb-2 text-sm uppercase tracking-wider">
-        {" "}
-        {label}{" "}
+        {label}
       </label>
       <input
         id={id}

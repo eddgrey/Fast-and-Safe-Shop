@@ -1,10 +1,31 @@
-import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import Bienvenida from "./Bienvenida";
+import { ToastContainer, toast } from "react-toastify";
 import FormField from "./FormField";
+import { useRef } from "react";
 
 const NuevoPassword = () => {
+  const historial = useHistory();
+  const passwordRef = useRef(null);
+  const newPasswordRef = useRef(null);
+
+  const successMessage = () => toast.success("seccess");
+  const errorMessage = () => toast.error("Complete los campos faltantes");
+  const removeQue = () => toast.clearWaitingQueue();
+
   const handleSumbit = (e) => {
     e.preventDefault();
+    if (
+      passwordRef.current.value !== newPasswordRef.current.value ||
+      passwordRef.current.value.length === 0 ||
+      newPasswordRef.current.value.length === 0
+    ) {
+      errorMessage();
+    } else {
+      successMessage();
+      historial.push("/");
+    }
+    removeQue();
   };
 
   return (
@@ -20,6 +41,7 @@ const NuevoPassword = () => {
             label="Nueva contraseña:"
             type="password"
             size="meduim"
+            refInput={passwordRef}
           />
 
           <FormField
@@ -27,14 +49,16 @@ const NuevoPassword = () => {
             label="Confirmar contraseña:"
             type="password"
             size="meduim"
+            refInput={newPasswordRef}
           />
         </div>
-        <Link to="/">
-          <button className="button theme">Continuar</button>
-        </Link>
+        <button className="button theme" type="submit">
+          Continuar
+        </button>
       </form>
 
       <Bienvenida message="Establecer nueva contraseña para continuar" />
+      <ToastContainer limit={1} />
     </section>
   );
 };

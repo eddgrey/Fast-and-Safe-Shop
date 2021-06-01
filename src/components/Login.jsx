@@ -1,48 +1,74 @@
 /* eslint-disable react/prop-types */
-import { useRef } from "react";
+import { useContext, useRef, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
+import { tipoUsuarioContext } from "../context/TipoUsuarioContext";
 import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Bienvenida from "./Bienvenida";
 import FormField from "./FormField";
-
-// const ConditionalLink = ({ children, to, condition }) =>
-//   !!condition && to ? <Link to={to}>{children}</Link> : <>{children}</>;
+import { messageToShowContext } from "../context/MessageToShowContext";
 
 const Login = () => {
+  const { setTipoUsuario } = useContext(tipoUsuarioContext);
+  const { messageToShow, setMessageToShow } = useContext(messageToShowContext);
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
   const historial = useHistory();
-  const notify = () => toast.success("Wow so easy !");
-  const showError = () => toast.error("Wow so easy !");
+  const messageId = useRef(null);
+
+  useEffect(() => {
+    console.log(messageToShow);
+    if (messageToShow.length > 0) {
+      (() => toast.info(messageToShow))();
+      setTimeout(setMessageToShow(""), 5000);
+    }
+  }, []);
+
+  const notify = () =>
+    (messageId.current = toast.info("Cargando...", { autoClose: 3000 }));
+
+  const showError = () =>
+    (messageId.current = toast.error("Complete los campos faltantes"));
+
+  const updateMessage = () =>
+    toast.update(messageId.current, {
+      type: toast.TYPE.SUCCESS,
+      render: "La operacion ha sido realizada correctamente.",
+      autoClose: 5000,
+    });
 
   const removeQue = () => toast.clearWaitingQueue();
 
   const handleSumbit = (e) => {
-    console.log("handle");
     e.preventDefault();
     const email = emailRef.current.value;
     const password = passwordRef.current.value;
 
     if (email.length === 0 || password.length === 0) {
-      console.log("error");
       showError();
     } else {
-      console.log("redirect");
+      console.log("redirect", notify, historial, updateMessage);
       notify();
-      historial.push("/");
+      if (email === "admin@email.com") {
+        setTipoUsuario("administrador");
+      } else if (email === "comprador@email.com") {
+        setTipoUsuario("comprador");
+      } else {
+        setTipoUsuario("vendedor");
+      }
+      setMessageToShow("Bienvenido");
+      setTimeout(updateMessage, 4000);
+      setTimeout(
+        () => historial.push(email === "admin@email.com" ? "/usuarios" : "/"),
+        2000
+      );
     }
     removeQue();
-    console.log(email.length);
-    console.log(emailRef.current.value);
-    console.log(passwordRef.current.value);
   };
 
   return (
     <section className="w-screen min-h-screen flex flex-row bg-blueGray-800">
-      <form
-        onSubmit={handleSumbit}
-        className="flex flex-col items-center px-20 py-16 w-full md:w-3/5 text-blueGray-100 justify-between"
-      >
+      <form onSubmit={handleSumbit} className="login">
         <p className=" text-3xl mb-10">Iniciar sesión</p>
         <div className="w-3/4">
           <FormField
@@ -64,17 +90,13 @@ const Login = () => {
         <button className="button theme" type="submit">
           Continuar
         </button>
-        <ToastContainer limit={4} />
-        {/* <Link to="/">
-        </Link> */}
-        {/* <ConditionalLink to="/" condition={emailRef.current.value.len > 0}>
-          Continuar
-        </ConditionalLink> */}
+
         <Link to="/recuperar">
           <p className="text-sm">¿Olvidó su contraseña?</p>
         </Link>
       </form>
       <Bienvenida message="Iniciar sesión para continuar" />
+      <ToastContainer limit={1} />
     </section>
   );
 };

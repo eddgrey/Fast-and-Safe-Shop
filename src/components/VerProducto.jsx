@@ -1,5 +1,11 @@
+/* eslint-disable react/prop-types */
 import box from "../img/box.png";
-import { Link } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
+import { useContext } from "react";
+import { tipoUsuarioContext } from "../context/TipoUsuarioContext";
+import { carritoContext } from "../context/CarritoContext";
+import { messageToShowContext } from "../context/MessageToShowContext";
+import { ToastContainer, toast } from "react-toastify";
 
 const Box = () => {
   return (
@@ -10,6 +16,39 @@ const Box = () => {
 };
 
 const VerProducto = () => {
+  const { nombreProducto, precioProducto, imgProducto } = useLocation().state;
+  const { tipoUsuario } = useContext(tipoUsuarioContext);
+  const { setMessageToShow } = useContext(messageToShowContext);
+  const { productosEnCarrito, setProductosEnCarrito } =
+    useContext(carritoContext);
+  const historial = useHistory();
+
+  const showMessage = () => toast.success("El producto se agrego al carrito");
+  const removeQue = () => toast.clearWaitingQueue();
+
+  const comprarProducto = () => {
+    if (tipoUsuario === "noRegistrado") {
+      setMessageToShow("Se necesita iniciar sesión");
+      historial.push("/login");
+    } else {
+      historial.push("/comprar");
+    }
+  };
+
+  const agregarCarrito = () => {
+    if (tipoUsuario === "noRegistrado") {
+      setMessageToShow("Se necesita iniciar sesión");
+      historial.push("/login");
+    } else {
+      setProductosEnCarrito([
+        ...productosEnCarrito,
+        { nombreProducto, precioProducto, imgProducto },
+      ]);
+      showMessage();
+    }
+    removeQue();
+  };
+
   return (
     <section className="flex flex-row w-11/12 h-4/5 px-4 py-6 mt-10 bg-blueGray-100 mx-auto text-blueGray-900">
       <div className="flex flex-col">
@@ -18,64 +57,60 @@ const VerProducto = () => {
         <Box />
         <Box />
       </div>
-      <div className="flex-grow flex flex-row justify-center">
-        <img src={box} alt="" className="w-72"></img>
+      <div className="flex flex-row justify-center w-1/3">
+        <img
+          src={imgProducto}
+          alt={nombreProducto}
+          className=" object-cover p-4"
+        ></img>
       </div>
-      <div className="flex flex-col justify-around pr-20">
+      <div className="flex flex-col justify-around w-1/3">
         <div>
-          <em className="text-2xl font-medium">Nombre del Producto</em>
+          <em className="text-2xl font-medium">{nombreProducto}</em>
           <div className="text-blue-600 flex flex-row items-center mt-2 text-sm">
             <i className="fas fa-star" />
             <i className="fas fa-star" />
             <i className="fas fa-star" />
             <i className="fas fa-star" />
             <i className="fas fa-star" />
-            <p className="text-xs text-blueGray-500 ml-2">
+            {/* <p className="text-xs text-blueGray-500 ml-2">
               Número de opiniones
-            </p>
+            </p> */}
           </div>
         </div>
         <div>
-          <strong className="text-3xl font-light mb-1">$ Precio</strong>
-          <p className="text-sm mb-2">IVA incluido</p>
-          <p className="text-sm text-blue-800">Ver metodos de pago</p>
+          <strong className="text-3xl font-light mb-1">
+            $ {precioProducto}
+          </strong>
         </div>
-        <ul className="text-lg">
-          Descripción del producto
-          <li className="text-sm my-2 list-disc">El producto incluye ...</li>
-          <li className="text-sm mb-2 list-disc">El producto es de ...</li>
-        </ul>
+        <div className="text-lg">Descripción del producto</div>
       </div>
       <div className="flex flex-col flex-grow">
-        <div className="flex flex-col border border-blueGray-300 mb-4 p-4">
-          <span className=" text-green-600">
-            <i className="fas fa-shuttle-van" /> Envío a todo el país
-          </span>
-
-          <strong className="my-2">Stock disponible</strong>
-          <p>
-            Cantidad: <strong>1 unidad</strong>
-          </p>
-          <Link to="/comprar" className="theme rounded-lg my-4 text-center">
-            <button className="px-2 py-3">Comprar ahora</button>
-          </Link>
-          <Link
-            to="/carrito"
-            className="px-2 py-3 bg-gradient-to-r from-blue-500 via-blue-600  to-indigo-500 text-white rounded-lg my-4 text-center"
+        <div className="flex flex-col justify-center h-full border border-blueGray-300 mb-4 p-4">
+          <button
+            className="theme rounded-lg my-4 text-center px-2 py-3"
+            onClick={comprarProducto}
           >
-            <button className="">Agregar al carrito</button>
-          </Link>
+            Comprar ahora
+          </button>
+          <button
+            className="px-2 py-3 w-full bg-gradient-to-r from-blue-500 via-blue-600  to-indigo-500 text-white rounded-lg my-4 text-center"
+            onClick={agregarCarrito}
+          >
+            Agregar al carrito
+          </button>
         </div>
 
-        <div className="flex flex-col border border-blueGray-300 p-4">
+        {/* <div className="flex flex-col border border-blueGray-300 p-4">
           <p className="text-xl font-light text-center mb-4">
             Información de la tienda
           </p>
           <em className="mb-2">Nombre tienda</em>
           <em className="mb-2">Número de ventas</em>
           <p className="text-sm text-blue-800">Ver más datos de la tienda</p>
-        </div>
+        </div> */}
       </div>
+      <ToastContainer limit={1} />
     </section>
   );
 };

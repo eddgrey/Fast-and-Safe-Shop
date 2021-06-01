@@ -1,52 +1,75 @@
 /* eslint-disable react/prop-types */
-import React from "react";
+import React, { useContext } from "react";
+import { Link } from "react-router-dom";
+import { tipoUsuarioContext } from "../context/TipoUsuarioContext";
 
 const Dato = ({ title, value }) => {
   return (
     <div className="flex flex-row px-4 py-4 border-b border-blueGray-300">
       <p className="w-2/5">{title}</p>
       <em className="w-2/5">{value}</em>
-      <button className="w-1/5">Modificar</button>
+      <button className="w-1/5 text-blue-800">Modificar</button>
     </div>
   );
 };
 
 const Cuenta = () => {
+  const { tipoUsuario } = useContext(tipoUsuarioContext);
   return (
-    <section className="w-3/5 min-h-full flex flex-col justify-around items-center mx-auto text-blueGray-900 mt-10">
+    <section className="cuenta">
       <h2 className="tracking-wide text-3xl font-medium">Mi Cuenta</h2>
 
       <div className="w-full mb-10">
         <h3 className="text-lg font-semibold tracking-wide mb-4">
           Datos de cuenta
         </h3>
-        <div className="flex flex-col bg-blueGray-50 w-full border border-blueGray-300 rounded-xl">
-          <Dato title="Usuario" value="Nombre usuario" />
+        <section className="seccion-cuenta">
+          <Dato title="Nombre" value="Nombre usuario" />
           <Dato title="Correo electrónico:" value="example@email.com" />
           <Dato title="Contraseña" value="................" />
-        </div>
+        </section>
       </div>
 
-      <div className="w-full mb-10">
-        <h3 className="text-lg font-semibold tracking-wide mb-4">
-          Datos personales
-        </h3>
-        <div className="flex flex-col bg-blueGray-50 w-full border border-blueGray-300 rounded-xl">
-          <Dato title="Nombre y Apellido" value="Nombre Apellido" />
-          <Dato title="Teléfono:" value="" />
-        </div>
-      </div>
-
-      <div className="w-full mb-10">
-        <h3 className="text-lg font-semibold tracking-wide mb-4">
-          Direcciones
-        </h3>
-        <div className="flex flex-col bg-blueGray-50 w-full border border-blueGray-300 rounded-xl">
-          <Dato title="Usuario" value="Nombre usuario" />
-          <Dato title="Correo electrónico:" value="example@email.com" />
-          <p>Agregar dirección</p>
-        </div>
-      </div>
+      {tipoUsuario === "comprador" ? (
+        <>
+          <div className="w-full mb-10">
+            <h3 className="text-lg font-semibold tracking-wide mb-4">
+              Direcciones
+            </h3>
+            <div className="seccion-cuenta">
+              <div className="flex flex-row items-center mt-4 border-b border-blueGray-300">
+                <span className="text-blue-700 text-xl mx-8">
+                  <i className="fas fa-map-marker-alt"></i>
+                </span>
+                <div>
+                  <p className="font-normal">CP</p>
+                  <p className="text-sm text-blueGray-500">Calle</p>
+                  <p className="text-sm text-blueGray-500">Nombre</p>
+                  <p className="text-sm text-blueGray-500">Tel.</p>
+                </div>
+                <p className="text-blue-700 ml-24">Modificar</p>
+              </div>
+              <Link to="domicilio">
+                <p className="m-4 text-blue-800 text-right">
+                  Agregar dirección
+                </p>
+              </Link>
+            </div>
+          </div>
+          <div className="w-full mb-10">
+            <h3 className="text-lg font-semibold tracking-wide mb-4">
+              Tarjetas
+            </h3>
+            <div className="seccion-cuenta">
+              <p>Tarjeta</p>
+              <Link to="domicilio">
+                <p className="m-4 text-blue-800 text-right">Agregar tarjeta</p>
+              </Link>
+            </div>
+          </div>
+        </>
+      ) : null}
+      <button className="button theme">Eliminar Cuenta</button>
     </section>
   );
 };

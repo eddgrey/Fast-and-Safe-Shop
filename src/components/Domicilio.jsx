@@ -1,18 +1,18 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import FormField from "./FormField";
 
 const Domicilio = () => {
+  const historial = useHistory();
+
   const handleSumbit = (e) => {
     e.preventDefault();
+    historial.goBack();
   };
 
   return (
     <section className="w-full h-full flex flex-row justify-center">
-      <form
-        onSubmit={handleSumbit}
-        className="flex flex-col justify-around items-center px-8 py-6 my-10 md:w-3/5 w-4/5 text-blueGray-900 bg-blueGray-100"
-      >
+      <form onSubmit={handleSumbit} className="formulario">
         <p className=" text-3xl pb-14 uppercase tracking-wider font-medium">
           Domicilio
         </p>
@@ -32,11 +32,6 @@ const Domicilio = () => {
           size="large"
           theme="light"
         />
-        {/* 
-                <div className="flex flex-col w-full mb-12">
-                    <label htmlFor="text" className="mb-2 text-sm uppercase tracking-wider"> Probando</label>
-                    <input id="text" type="text" className="py-1 pl-1 w-full input-light"/>
-                </div> */}
 
         <div className="flex flex-row w-full justify-between ">
           <FormField
@@ -107,9 +102,9 @@ const Domicilio = () => {
             className="border border-blueGray-500 w-full focus:outline-none p-2 mt-4"
           ></textarea>
         </div>
-        <Link to="/comprar">
-          <button className="button theme">Continuar</button>
-        </Link>
+        <button className="button theme" type="submit">
+          Continuar
+        </button>
       </form>
     </section>
   );

@@ -16,12 +16,9 @@ const Search = () => {
         type="input"
         ref={inputRef}
         defaultValue="Search"
-        className="w-full focus:outline-none rounded-xl pl-4 py-2 text-blueGray-900 bg-blueGray-100"
+        className="search"
       />
-      <button
-        type="submit"
-        className="theme rounded-r-xl w-20 px-4 md:px-6 relative right-12 text-blueGray-200 focus:outline-none"
-      >
+      <button type="submit" className="theme button-search">
         <i className="fas fa-search"></i>
       </button>
     </form>

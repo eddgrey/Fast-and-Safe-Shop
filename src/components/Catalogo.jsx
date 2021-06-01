@@ -11,7 +11,7 @@ import { Link } from "react-router-dom";
 
 const MyCategory = ({ nombre, imgURL }) => {
   return (
-    <section className="flex flex-col justify-around items-center bg-blueGray-100 w-1/3 md:w-1/4 h-3/5 mr-2 mb-6 px-6 py-6 border rounded-xl">
+    <section className="categoria">
       <h2 className="text-blueGray-900 text-xl font-semibold mb-2 tracking-wide">
         {nombre}
       </h2>

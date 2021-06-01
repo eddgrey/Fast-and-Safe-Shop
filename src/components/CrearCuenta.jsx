@@ -1,56 +1,76 @@
 import FormField from "./FormField";
 import Bienvenida from "./Bienvenida";
-import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import { useRef } from "react";
+// import { tipoUsuarioContext } from "../context/TipoUsuarioContext";
 
 const CrearCuenta = () => {
+  const nombreRef = useRef(null);
+  const apellidoRef = useRef(null);
+  const fechaNamcimientaRef = useRef(null);
+  const entidadFederativaRef = useRef(null);
+  const emailRef = useRef(null);
+  const passwordRef = useRef(null);
+
+  const historial = useHistory();
+  const showError = () => toast.error("Complete los campos faltantes");
+  const removeQue = () => toast.clearWaitingQueue();
+
   const handleSumbit = (e) => {
     e.preventDefault();
-    console.log(e.target);
+    if (nombreRef.current.value.length === 0) {
+      console.log("error");
+      showError();
+    } else {
+      historial.push("/");
+    }
+    removeQue();
   };
 
   return (
     <section className="w-full h-screen flex flex-row bg-blueGray-800">
-      <form
-        onSubmit={handleSumbit}
-        className="flex flex-col justify-around items-center px-14 py-6 w-full md:w-3/5 text-blueGray-100"
-      >
+      <form onSubmit={handleSumbit} className="login">
         <p className=" text-3xl mb-3">Crear Cuenta</p>
 
-        <FormField id="nombre" label="Nombre: " type="input" size="small" />
+        <FormField
+          id="nombre"
+          label="Nombre: "
+          type="input"
+          size="small"
+          refInput={nombreRef}
+        />
 
         <FormField
           id="apellidos"
           label="Apellidos: "
           type="input"
           size="small"
+          refInput={apellidoRef}
         />
 
         <FormField
-          id="edad"
+          id="fechaNacimiento"
           label="Fecha de nacimiento: "
           type="date"
           size="small"
+          refInput={fechaNamcimientaRef}
         />
 
         <FormField
-          id="pais"
+          id="entidadFederativa"
           label="Entidad federativa: "
           type="input"
           size="small"
+          refInput={entidadFederativaRef}
         />
-        {/* 
-        <FormField
-          id="username"
-          label="Nombre de usuario: "
-          type="input"
-          size="small"
-        /> */}
 
         <FormField
           id="email"
           label="Correo electrónico: "
           type="email"
           size="small"
+          refInput={emailRef}
         />
 
         <FormField
@@ -58,13 +78,15 @@ const CrearCuenta = () => {
           label="Contraseña: "
           type="password"
           size="small"
+          refInput={passwordRef}
         />
-        <Link to="/">
-          <button className="button theme">Continuar</button>
-        </Link>
+        <button className="button theme" type="submit" onClick={handleSumbit}>
+          Continuar
+        </button>
       </form>
 
       <Bienvenida message="Crear nueva cuenta para continuar" />
+      <ToastContainer limit={1} />
     </section>
   );
 };

@@ -1,10 +1,26 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useRef } from "react";
+import { useHistory } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 import Bienvenida from "./Bienvenida";
+import FormField from "./FormField";
 
 const Recuperar = () => {
+  const notify = () => toast.success("");
+  const showError = () => toast.error("Complete los campos faltantes");
+  const removeQue = () => toast.clearWaitingQueue();
+
+  const emailRef = useRef(null);
+  const historial = useHistory();
   const handleSumbit = (e) => {
     e.preventDefault();
+    if (emailRef.current.value.length === 0) {
+      showError();
+    } else {
+      notify();
+      historial.push("/nuevo-password");
+    }
+    console.log(historial);
+    removeQue();
   };
 
   return (
@@ -17,7 +33,14 @@ const Recuperar = () => {
 
         <div className="w-3/4">
           <div className="flex flex-col w-full mb-12">
-            <label
+            <FormField
+              id="email"
+              label="Correo electrónico: "
+              type="email"
+              size="large"
+              refInput={emailRef}
+            />
+            {/* <label
               htmlFor="nombre"
               className="mb-2 text-sm uppercase tracking-wider"
             >
@@ -27,15 +50,16 @@ const Recuperar = () => {
               id="nombre"
               type="email"
               className="py-1 pl-1 text-lg focus:outline-none w-full border-b-2 border-blueGray-600 bg-blueGray-800"
-            />
+            /> */}
           </div>
         </div>
-        <Link to="/nuevo-password">
-          <button className="button theme">Continuar</button>
-        </Link>
+        <button className="button theme" type="submit">
+          Continuar
+        </button>
       </form>
 
       <Bienvenida message="Ingresar correo electrónico para continuar" />
+      <ToastContainer limit={1} />
     </section>
   );
 };

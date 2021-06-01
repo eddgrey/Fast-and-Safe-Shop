@@ -1,14 +1,14 @@
 import React from "react";
-import box from "../img/box.png";
-import { Link } from "react-router-dom";
+import { useLocation } from "react-router";
+import laptop from "../img/laptop.jpg";
+// import { Link } from "react-router-dom";
 
-const Comprar = () => {
+const EstadoCompra = () => {
+  const { estado } = useLocation().state;
   return (
     <section className="flex flex-row py-6 px-8 h-4/5 text-blueGray-900">
       <div className="w-4/5 mr-8">
-        <strong className="text-2xl font-semibold">
-          Revisa y confirma tu compra
-        </strong>
+        <strong className="text-2xl font-semibold">Resumen de compra</strong>
         <div className="border border-blueGray-400 mt-6 bg-blueGray-100">
           <div className="w-1/2 px-4 py-4">
             <h2 className="text-lg font-semibold">Domicilio</h2>
@@ -22,9 +22,6 @@ const Comprar = () => {
                 <p className="text-sm text-blueGray-500">Nombre</p>
                 <p className="text-sm text-blueGray-500">Tel.</p>
               </div>
-              <Link to="/domicilio">
-                <p className="text-blue-700 ml-24">Modificar</p>
-              </Link>
             </div>
           </div>
           <div className="w-1/2 px-4 py-4">
@@ -35,18 +32,11 @@ const Comprar = () => {
               </span>
               <div>
                 <em>Nombre del método de pago</em>
-                <p className="text-sm text-blueGray-500">
+                {/* <p className="text-sm text-blueGray-500">
                   El pago se hará a través de...
-                </p>
+                </p> */}
               </div>
-              <Link to="/metodo-pago">
-                <p className="text-blue-700 ml-24">Modificar</p>
-              </Link>
             </div>
-            <p className="text-sm text-blueGray-500 pl-6 pt-3">
-              No demores en pagar, solo podemos reservarte stock cuando el pago
-              se acredite
-            </p>
           </div>
         </div>
         <div className="flex flex-col border border-blueGray-400 px-4 py-4 mt-8 bg-blueGray-100">
@@ -54,7 +44,11 @@ const Comprar = () => {
             Fecha de entrega: ___________
           </h2>
           <div className="flex-grow flex flex-row ml-4">
-            <img src={box} alt="box" className="w-14"></img>
+            <img
+              src={laptop}
+              alt="laptop"
+              className=" object-scale-down w-40"
+            ></img>
             <div className="ml-4 flex flex-col justify-beetwen">
               <em className="text-lg font-semibold">Nombre del producto</em>
               <strong className="text-red-800">$Precio</strong>
@@ -68,9 +62,9 @@ const Comprar = () => {
       </div>
       <div className="flex flex-col justify-around w-1/5 border border-blueGray-400 p-4 h-full mt-14 bg-blueGray-100">
         <button className="button theme px-4 text-base mb-4">
-          Confirmar compra
+          {estado === "Entregado" ? "Devolver producto" : "Cancelar Pedido"}
         </button>
-        <h2 className=" font-semibold mb-4">Resumen del pedido</h2>
+        {/* <h2 className=" font-semibold mb-4">Total</h2> */}
         <p>
           Productos: <strong className="ml-8">$0.00</strong>
         </p>
@@ -84,5 +78,4 @@ const Comprar = () => {
     </section>
   );
 };
-
-export default Comprar;
+export default EstadoCompra;

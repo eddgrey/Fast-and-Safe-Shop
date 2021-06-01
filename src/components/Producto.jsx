@@ -1,18 +1,37 @@
 /* eslint-disable react/prop-types */
 import { Link } from "react-router-dom";
+import box from "../img/box.png";
 
-const Producto = ({ name = "Nombre del producto", precio = "precio", img }) => {
+const Producto = ({
+  nombreProducto = "Nombre del producto",
+  precioProducto = "precio",
+  imgProducto = { box },
+  categoriaProducto = "deporte",
+}) => {
   return (
-    <section className="flex flex-col justify-around bg-blueGray-100 w-1/2 md:w-1/6 px-2 pb-6">
+    <section className="producto">
       <img
-        src={img}
-        alt={name}
+        src={imgProducto}
+        alt={nombreProducto}
         className="border-b border-blueGray-500  object-scale-down p-4 h-48"
       />
-      <strong className="text-xl text-blueGray-900 mt-4">$ {precio}</strong>
-      <h2 className="text-blueGray-700 text-sm mb-2">{name}</h2>
+      <strong className="text-xl text-blueGray-900 mt-4">
+        $ {precioProducto}
+      </strong>
+      <h2 className="text-blueGray-700 text-sm mb-2">{nombreProducto}</h2>
+      <p className="hidden">{categoriaProducto}</p>
       <div className="theme button w-1/2 self-center text-base text-center px-4 py-1">
-        <Link to="/verProducto">
+        <Link
+          to={{
+            pathname: "/ver-producto",
+            state: {
+              nombreProducto,
+              precioProducto,
+              imgProducto,
+              categoriaProducto,
+            },
+          }}
+        >
           <p>Ver más</p>
         </Link>
       </div>

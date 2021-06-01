@@ -18,15 +18,9 @@ const Historial = () => {
       </div>
 
       <section className="flex flex-row justify-around pt-6">
-        <Producto img={box} />
+        <Producto imgProducto={box} />
 
-        <Producto img={box} />
-
-        <Producto img={box} />
-
-        <Producto img={box} />
-
-        <Producto img={box} />
+        <Producto imgProducto={box} />
       </section>
     </section>
   );

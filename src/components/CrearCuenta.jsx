@@ -1,23 +1,23 @@
 import FormField from "./FormField";
 import Bienvenida from "./Bienvenida";
-import { useHistory } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
-import { useRef } from "react";
+//import { useHistory } from "react-router-dom";
+//import { ToastContainer, toast } from "react-toastify";
+//import { useRef } from "react";
 // import { tipoUsuarioContext } from "../context/TipoUsuarioContext";
 
 const CrearCuenta = () => {
-  const nombreRef = useRef(null);
-  const apellidoRef = useRef(null);
-  const fechaNamcimientaRef = useRef(null);
-  const entidadFederativaRef = useRef(null);
-  const emailRef = useRef(null);
-  const passwordRef = useRef(null);
+  //const nombreRef = useRef(null);
+  //const apellidoRef = useRef(null);
+  //const fechaNamcimientaRef = useRef(null);
+  //const entidadFederativaRef = useRef(null);
+  //const emailRef = useRef(null);
+  //const passwordRef = useRef(null);
 
-  const historial = useHistory();
-  const showError = () => toast.error("Complete los campos faltantes");
-  const removeQue = () => toast.clearWaitingQueue();
+  //const historial = useHistory();
+  //const showError = () => toast.error("Complete los campos faltantes");
+  //const removeQue = () => toast.clearWaitingQueue();
 
-  const handleSumbit = (e) => {
+  /*const handleSumbit = (e) => {
     e.preventDefault();
     if (nombreRef.current.value.length === 0) {
       console.log("error");
@@ -26,27 +26,27 @@ const CrearCuenta = () => {
       historial.push("/");
     }
     removeQue();
-  };
+  };*/
 
   return (
     <section className="w-full h-screen flex flex-row bg-blueGray-800">
-      <form onSubmit={handleSumbit} className="login">
+      <form className="login">
         <p className=" text-3xl mb-3">Crear Cuenta</p>
 
         <FormField
           id="nombre"
           label="Nombre: "
-          type="input"
+          type="text"
           size="small"
-          refInput={nombreRef}
+          name="nombreUsuario"
         />
 
         <FormField
           id="apellidos"
           label="Apellidos: "
-          type="input"
+          type="text"
           size="small"
-          refInput={apellidoRef}
+          name="apellidoUsuario"
         />
 
         <FormField
@@ -54,15 +54,7 @@ const CrearCuenta = () => {
           label="Fecha de nacimiento: "
           type="date"
           size="small"
-          refInput={fechaNamcimientaRef}
-        />
-
-        <FormField
-          id="entidadFederativa"
-          label="Entidad federativa: "
-          type="input"
-          size="small"
-          refInput={entidadFederativaRef}
+          name="fechaNacimiento"
         />
 
         <FormField
@@ -70,7 +62,7 @@ const CrearCuenta = () => {
           label="Correo electrónico: "
           type="email"
           size="small"
-          refInput={emailRef}
+          name="email"
         />
 
         <FormField
@@ -78,15 +70,22 @@ const CrearCuenta = () => {
           label="Contraseña: "
           type="password"
           size="small"
-          refInput={passwordRef}
+          name="password"
         />
-        <button className="button theme" type="submit" onClick={handleSumbit}>
+
+        <FormField
+          id="password2"
+          label="Confirmar contraseña: "
+          type="password2"
+          size="small"
+          name="password2"
+        />
+        <button className="button theme" type="submit">
           Continuar
         </button>
       </form>
 
       <Bienvenida message="Crear nueva cuenta para continuar" />
-      <ToastContainer limit={1} />
     </section>
   );
 };

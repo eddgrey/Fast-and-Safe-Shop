@@ -9,19 +9,19 @@ const CrearCuenta = () => {
   const labelForm = "w-1/4 text-sm uppercase tracking-wide";
   const separate = "flex flex-row w-full mb-2 justify-between";
   const inputForm = "input-dark pl-2  w-3/4 ";
+
   return (
     <section className={rowForm}>
       <form className="login" onSubmit={handleSubmit}>
         <p className=" text-3xl mb-3">Crear Cuenta</p>
-
         <div className={separate}>
-          <label className={labelForm}>Nombre:</label>
+          <label className={labelForm}>Nombre: *</label>
           <input
             className={inputForm}
             id="nombre"
             type="text"
             pattern="[A-Za-z]{3,15}"
-            title="Sólo caracteres alfabéticos, mínimo 3"
+            title="Sólo caracteres alfabéticos, mínimo 3, sin acentos"
             name="nombreUsuario"
             value={values.nombreUsuario}
             onChange={handleChange}
@@ -31,13 +31,14 @@ const CrearCuenta = () => {
           <p className="alerta">{errors.nombreUsuario}</p>
         )}
         <div className={separate}>
-          <label className={labelForm}>Apellidos:</label>
+          <label className={labelForm}>Apellidos: *</label>
           <input
             className={inputForm}
             id="apellidoUsuario"
             type="text"
             pattern="[A-Za-z]{3,15}"
             name="apellidoUsuario"
+            title="Sólo caracteres alfabéticos, mínimo 3, sin acentos"
             value={values.apellidoUsuario}
             onChange={handleChange}
           />
@@ -46,19 +47,21 @@ const CrearCuenta = () => {
           <p className="alerta">{errors.apellidoUsuario}</p>
         )}
         <div className={separate}>
-          <label className={labelForm}>Fecha de Nacimiento:</label>
+          <label className={labelForm}>Fecha de Nacimiento: *</label>
           <input
             className={inputForm}
             id="fechaNacimiento"
-            type="text"
+            type="date"
             name="fechaNacimiento"
             value={values.fechaNacimiento}
             onChange={handleChange}
           />
         </div>
-
+        {errors.fechaNacimiento && (
+          <p className="alerta">{errors.fechaNacimiento}</p>
+        )}
         <div className={separate}>
-          <label className={labelForm}>Correo electrónico</label>
+          <label className={labelForm}>Correo electrónico: *</label>
           <input
             className={inputForm}
             id="email"
@@ -68,9 +71,9 @@ const CrearCuenta = () => {
             onChange={handleChange}
           />
         </div>
-
+        {errors.email && <p className="alerta">{errors.email}</p>}
         <div className={separate}>
-          <label className={labelForm}>Contraseña</label>
+          <label className={labelForm}>Contraseña: *</label>
           <input
             className={inputForm}
             id="password"
@@ -82,7 +85,7 @@ const CrearCuenta = () => {
         </div>
 
         <div className={separate}>
-          <label className={labelForm}>Contraseña</label>
+          <label className={labelForm}>Contraseña: *</label>
           <input
             className={inputForm}
             id="password2"

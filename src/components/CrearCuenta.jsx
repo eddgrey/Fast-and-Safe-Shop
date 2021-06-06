@@ -6,8 +6,8 @@ import "../styles/styles.css";
 const CrearCuenta = () => {
   const { handleChange, values, handleSubmit, errors } = useForm(validate);
   const rowForm = "w-full h-screen flex flex-row bg-blueGray-800";
-  const labelForm = "mb-1 w-1/4 text-sm uppercase tracking-wide";
-  const separate = "flex flex-row w-full mb-8 justify-between";
+  const labelForm = "w-1/4 text-sm uppercase tracking-wide";
+  const separate = "flex flex-row w-full mb-2 justify-between";
   const inputForm = "input-dark pl-2  w-3/4 ";
   return (
     <section className={rowForm}>
@@ -20,24 +20,31 @@ const CrearCuenta = () => {
             className={inputForm}
             id="nombre"
             type="text"
+            pattern="[A-Za-z]{3,15}"
+            title="Sólo caracteres alfabéticos, mínimo 3"
             name="nombreUsuario"
             value={values.nombreUsuario}
             onChange={handleChange}
           />
         </div>
-        {errors.nombreUsuario && <p>{errors.nombreUsuario}</p>}
+        {errors.apellidoUsuario && (
+          <p className="alerta">{errors.nombreUsuario}</p>
+        )}
         <div className={separate}>
           <label className={labelForm}>Apellidos:</label>
           <input
             className={inputForm}
             id="apellidoUsuario"
             type="text"
+            pattern="[A-Za-z]{3,15}"
             name="apellidoUsuario"
             value={values.apellidoUsuario}
             onChange={handleChange}
           />
         </div>
-
+        {errors.apellidoUsuario && (
+          <p className="alerta">{errors.apellidoUsuario}</p>
+        )}
         <div className={separate}>
           <label className={labelForm}>Fecha de Nacimiento:</label>
           <input

@@ -3,11 +3,11 @@ import { useState } from "react";
 const useForm = (validate) => {
   const [values, setValues] = useState({
     nombreUsuario: "",
-    apellidoUsuario: " ",
-    fechaNacimiento: " ",
-    email: " ",
-    password: " ",
-    password2: " ",
+    apellidoUsuario: "",
+    fechaNacimiento: "",
+    email: "",
+    password: "",
+    password2: "",
   });
   const [errors, setErrors] = useState({});
 

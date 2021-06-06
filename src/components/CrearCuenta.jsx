@@ -1,5 +1,6 @@
 import FormField from "./FormField";
 import Bienvenida from "./Bienvenida";
+import "../styles/styles.css";
 //import { useHistory } from "react-router-dom";
 //import { ToastContainer, toast } from "react-toastify";
 //import { useRef } from "react";
@@ -80,11 +81,16 @@ const CrearCuenta = () => {
           size="small"
           name="password2"
         />
+        <span className="otro_link">
+          ¿Ya tienes una cuenta? Inicia sesión
+          <a className="link_login" href="/login">
+            Aquí
+          </a>
+        </span>
         <button className="button theme" type="submit">
           Continuar
         </button>
       </form>
-
       <Bienvenida message="Crear nueva cuenta para continuar" />
     </section>
   );

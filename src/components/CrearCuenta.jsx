@@ -82,7 +82,7 @@ const CrearCuenta = () => {
           name="password2"
         />
         <span className="otro_link">
-          ¿Ya tienes una cuenta? Inicia sesión
+          ¿Ya tienes una cuenta? Inicia sesión 
           <a className="link_login" href="/login">
             Aquí
           </a>

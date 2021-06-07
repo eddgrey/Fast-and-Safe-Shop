@@ -7,7 +7,7 @@ import { messageToShowContext } from "../context/MessageToShowContext";
 import { useCarrito } from "../context/CarritoContext";
 import NumberFormat from "react-number-format";
 
-const ProductoComprar = ({ nombre, precio, img, cantidad }) => {
+const ProductoComprar = ({ nombre, precio, img, cantidad = 1 }) => {
   return (
     <div className="flex-grow flex flex-row ml-4 mb-10">
       <img src={img} alt="box" className=" w-20 object-cover"></img>
@@ -101,7 +101,7 @@ const Comprar = () => {
               nombre={productoComprarAhora.nombreProducto}
               precio={productoComprarAhora.precioProducto}
               img={productoComprarAhora.imgProducto}
-              cantidad={productoComprarAhora.cantidad}
+              cantidad={1}
             />
           ) : (
             productosEnCarrito.map(
@@ -141,7 +141,11 @@ const Comprar = () => {
         <strong className="border-t-2 border-blueGray-500 text-xl pt-2 mt-2">
           Total :
           <NumberFormat
-            value={totalCarrito()}
+            value={
+              totalCarrito()
+                ? totalCarrito()
+                : productoComprarAhora.precioProducto
+            }
             displayType="text"
             thousandSeparator={true}
             prefix="$"

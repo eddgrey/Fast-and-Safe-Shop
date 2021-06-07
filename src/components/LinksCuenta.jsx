@@ -20,8 +20,7 @@ const LinksCuenta = () => {
 
   const logout = () => {
     setTipoUsuario("noRegistrado");
-    setMessageToShow("Se ha cerrado la sesion");
-    historial.push("/");
+    setTimeout(() => historial.push("/"), 3000);
   };
 
   return tipoUsuario === "noRegistrado" ? (

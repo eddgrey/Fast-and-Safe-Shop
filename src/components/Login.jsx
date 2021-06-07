@@ -87,6 +87,13 @@ const Login = () => {
             refInput={passwordRef}
           />
         </div>
+
+        <span className="otro_link">
+          ¿No tienes cuenta? Crea una
+          <a className="link_login" href="/registro">
+            Aquí
+          </a>
+        </span>
         <button className="button theme" type="submit">
           Continuar
         </button>

@@ -4,8 +4,8 @@ import useForm from "./useForm";
 import validate from "./validarInfo";
 import "../styles/styles.css";
 
-const CrearCuenta = () => {
-  const { handleChange, values, handleSubmit, errors } = useForm(validate);
+const CrearCuenta = ({submitForm}) => {
+  const { handleChange, values, handleSubmit, errors } = useForm(submitForm, validate);
   const rowForm = "w-full h-screen flex flex-row bg-blueGray-800";
   const labelForm = "w-1/4 text-sm uppercase tracking-wide";
   const separate = "flex flex-row w-full mb-2 justify-between";

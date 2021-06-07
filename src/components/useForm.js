@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { useState } from "react";
 
 const useForm = (validate) => {
@@ -10,6 +11,7 @@ const useForm = (validate) => {
     password2: "",
   });
   const [errors, setErrors] = useState({});
+  const [isSubmitting, setIsSubmitting] = useState (false);
 
   const handleChange = (e) => {
     setValues({
@@ -21,6 +23,7 @@ const useForm = (validate) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setErrors(validate(values));
+    setIsSubmitting(true);
   };
 
   return { handleChange, values, handleSubmit, errors };

@@ -13,18 +13,17 @@ const CrearCuenta = ({submitForm}) => {
 
   return (
     <section className={rowForm}>
-      <form className="login" onSubmit={handleSubmit}>
+      <form className="login" onSubmit={handleSubmit} noValidate>
         <p className=" text-3xl mb-3">Crear Cuenta</p>
         <div className={separate}>
           <label className={labelForm}>Nombre: *</label>
           <input
             className={inputForm}
-            id="nombre"
+            id="nombreUsuario"
             type="text"
-            pattern="[A-Za-z]{3,15}"
-            title="Sólo caracteres alfabéticos, mínimo 3, sin acentos. SOLO UN NOMBRE"
-            name="nombreUsuario"
+            name="nombreUsuario"         
             value={values.nombreUsuario}
+            required
             onChange={handleChange}
           />
         </div>

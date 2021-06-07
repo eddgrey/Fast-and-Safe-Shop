@@ -1,7 +1,7 @@
 /* eslint-disable */
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-const useForm = (validate) => {
+const useForm = (callback, validate) => {
   const [values, setValues] = useState({
     nombreUsuario: "",
     apellidoUsuario: "",
@@ -13,7 +13,7 @@ const useForm = (validate) => {
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState (false);
 
-  const handleChange = (e) => {
+  const handleChange = e => {
     setValues({
       ...values,
       [e.target.name]: e.target.value,
@@ -25,6 +25,15 @@ const useForm = (validate) => {
     setErrors(validate(values));
     setIsSubmitting(true);
   };
+
+  useEffect(
+    () => {
+      if (Object.keys(errors).length === 0 && isSubmitting) {
+        callback();
+      }
+    },
+    [errors]
+  );
 
   return { handleChange, values, handleSubmit, errors };
 };

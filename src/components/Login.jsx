@@ -47,7 +47,6 @@ const Login = () => {
     if (email.length === 0 || password.length === 0) {
       showError();
     } else {
-      console.log("redirect", notify, historial, updateMessage);
       notify();
       if (email === "admin@email.com") {
         setTipoUsuario("administrador");
@@ -90,9 +89,9 @@ const Login = () => {
 
         <span className="otro_link">
           ¿No tienes cuenta? Crea una
-          <a className="link_login" href="/registro">
+          <Link className="link_login" to="/registro">
             Aquí
-          </a>
+          </Link>
         </span>
         <button className="button theme" type="submit">
           Continuar

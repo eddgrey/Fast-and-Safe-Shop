@@ -3,6 +3,7 @@ import Bienvenida from "./Bienvenida";
 import useForm from "./useForm";
 import validate from "./validarInfo";
 import "../styles/styles.css";
+import { Link } from "react-router-dom";
 
 const CrearCuenta = ({ submitForm }) => {
   const { handleChange, values, handleSubmit, errors } = useForm(
@@ -101,9 +102,9 @@ const CrearCuenta = ({ submitForm }) => {
         {errors.password2 && <p className="alerta">{errors.password2}</p>}
         <span className="otro_link">
           ¿Ya tienes una cuenta? Inicia sesión
-          <a className="link_login" href="/login">
+          <Link className="link_login" to="/login">
             Aquí
-          </a>
+          </Link>
         </span>
         <button className="button theme" type="submit">
           Continuar

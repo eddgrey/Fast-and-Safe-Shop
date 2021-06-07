@@ -1,3 +1,4 @@
+/* eslint-disable */
 import Bienvenida from "./Bienvenida";
 import useForm from "./useForm";
 import validate from "./validarInfo";
@@ -21,31 +22,27 @@ const CrearCuenta = () => {
             id="nombre"
             type="text"
             pattern="[A-Za-z]{3,15}"
-            title="Sólo caracteres alfabéticos, mínimo 3, sin acentos"
+            title="Sólo caracteres alfabéticos, mínimo 3, sin acentos. SOLO UN NOMBRE"
             name="nombreUsuario"
             value={values.nombreUsuario}
             onChange={handleChange}
           />
         </div>
-        {errors.apellidoUsuario && (
-          <p className="alerta">{errors.nombreUsuario}</p>
-        )}
+        {errors.apellidoUsuario && (<p className="alerta">{errors.nombreUsuario}</p>)}
         <div className={separate}>
-          <label className={labelForm}>Apellidos: *</label>
+          <label className={labelForm}>Apellido: *</label>
           <input
             className={inputForm}
             id="apellidoUsuario"
             type="text"
             pattern="[A-Za-z]{3,15}"
             name="apellidoUsuario"
-            title="Sólo caracteres alfabéticos, mínimo 3, sin acentos"
+            title="Sólo caracteres alfabéticos, mínimo 3, sin acentos. SOLO UN APELLIDO"
             value={values.apellidoUsuario}
             onChange={handleChange}
           />
         </div>
-        {errors.apellidoUsuario && (
-          <p className="alerta">{errors.apellidoUsuario}</p>
-        )}
+        {errors.apellidoUsuario && (<p className="alerta">{errors.apellidoUsuario}</p>)}
         <div className={separate}>
           <label className={labelForm}>Fecha de Nacimiento: *</label>
           <input
@@ -57,9 +54,7 @@ const CrearCuenta = () => {
             onChange={handleChange}
           />
         </div>
-        {errors.fechaNacimiento && (
-          <p className="alerta">{errors.fechaNacimiento}</p>
-        )}
+        {errors.fechaNacimiento && (<p className="alerta">{errors.fechaNacimiento}</p>)}
         <div className={separate}>
           <label className={labelForm}>Correo electrónico: *</label>
           <input
@@ -83,7 +78,7 @@ const CrearCuenta = () => {
             onChange={handleChange}
           />
         </div>
-
+        {errors.password && <p className="alerta">{errors.password}</p>}
         <div className={separate}>
           <label className={labelForm}>Contraseña: *</label>
           <input
@@ -95,6 +90,7 @@ const CrearCuenta = () => {
             onChange={handleChange}
           />
         </div>
+        {errors.password2 && <p className="alerta">{errors.password2}</p>}
         <span className="otro_link">
           ¿Ya tienes una cuenta? Inicia sesión
           <a className="link_login" href="/login">

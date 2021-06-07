@@ -3,6 +3,7 @@ export default function validateInfo(values) {
   let errors = {};
   const regex_email = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
   const regex_date = /^(19|20)\d\d[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])$/;
+  const regex_password = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/gm; //8 a 15 caracteres, 1 mayúscula, 1 minúscula, 1 caracter especial.
 
   function getAge(dateString) {
     var today = new Date();
@@ -28,9 +29,11 @@ export default function validateInfo(values) {
   } else if (!regex_date.test(values.fechaNacimiento)) {
     errors.fechaNacimiento = "Formato de fecha no válido (use dd/mm/yyyy)";
   } else {
-     if (getAge(values.fechaNacimiento) < 18) {
-         errors.fechaNacimiento = "Sólo mayores de edad pueden crear una cuenta."
-     }
+    if (getAge(values.fechaNacimiento) > 0  && getAge(values.fechaNacimiento) < 18) {
+      errors.fechaNacimiento = "Sólo mayores de edad pueden crear una cuenta.";
+    } else if (getAge(values.fechaNacimiento) < 0 ) {
+      errors.fechaNacimiento = "El año no es válido. Intenta nuevamente.";
+    }
   }
 
   if (!values.email) {
@@ -40,14 +43,14 @@ export default function validateInfo(values) {
   }
   if (!values.password) {
     errors.password = "Contraseña faltante";
-  } else if (values.password.length < 8) {
-    errors.password = "El contraseña debe contener 8 o más caracteres";
+  } else if (!regex_password.test(values.password)) {
+    errors.password = "El contraseña debe contener 8 a 15 caracteres. Una mayúscula, una minúscula y un caracter especial.";
   }
 
   if (!values.password2) {
     errors.password2 = "Contraseña faltante";
   } else if (values.password2 !== values.password) {
-    errors.password2 = "Las contraseñas no coinciden";
+    errors.password2 = "Las contraseñas no coinciden. Intenta nuevamente.";
   }
   return errors;
 }

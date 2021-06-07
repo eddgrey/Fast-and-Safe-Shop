@@ -96,7 +96,7 @@ const Comprar = () => {
           <h2 className=" text-green-800 text-lg font-semibold mb-6">
             Fecha de entrega: ___________
           </h2>
-          {productoComprarAhora ? (
+          {Object.keys(productoComprarAhora).length !== 0 ? (
             <ProductoComprar
               nombre={productoComprarAhora.nombreProducto}
               precio={productoComprarAhora.precioProducto}

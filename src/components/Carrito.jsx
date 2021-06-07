@@ -5,10 +5,16 @@ import { useCarrito } from "../context/CarritoContext";
 import NumberFormat from "react-number-format";
 import { useProductos } from "../context/ProductosContext";
 import ProductoCarrito from "./ProductoCarrito";
+import { useEffect } from "react";
 
 const Carrito = () => {
-  const { productosEnCarrito, totalCarrito } = useCarrito();
+  const { productosEnCarrito, totalCarrito, setProductoComprarAhora } =
+    useCarrito();
   const { precioOriginalProducto } = useProductos();
+
+  useEffect(() => {
+    setProductoComprarAhora({});
+  }, []);
 
   return (
     <section className="mx-auto mt-10 w-11/12 min-h-screen  py-6 px-10 bg-blueGray-100 text-blueGray-900">

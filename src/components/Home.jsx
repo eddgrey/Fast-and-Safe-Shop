@@ -3,13 +3,15 @@ import { useEffect, useContext } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import { useProductos } from "../context/ProductosContext";
 import { messageToShowContext } from "../context/MessageToShowContext";
+import { useCarrito } from "../context/CarritoContext";
 
 const Home = () => {
   const { productos } = useProductos();
+  const { setProductoComprarAhora } = useCarrito();
   const { messageToShow, setMessageToShow } = useContext(messageToShowContext);
 
   useEffect(() => {
-    console.log(messageToShow);
+    setProductoComprarAhora({});
     if (messageToShow.length > 0) {
       (() => toast.success(messageToShow))();
       setTimeout(setMessageToShow(""), 5000);

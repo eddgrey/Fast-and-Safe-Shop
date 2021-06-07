@@ -9,21 +9,22 @@ const NuevoPassword = () => {
   const passwordRef = useRef(null);
   const newPasswordRef = useRef(null);
 
-  const successMessage = () => toast.success("seccess");
-  const errorMessage = () => toast.error("Complete los campos faltantes");
+  const successMessage = () => toast.success("Operación exitosa");
+  const errorMessage = (message) => toast.error(message);
   const removeQue = () => toast.clearWaitingQueue();
 
   const handleSumbit = (e) => {
     e.preventDefault();
     if (
-      passwordRef.current.value !== newPasswordRef.current.value ||
       passwordRef.current.value.length === 0 ||
       newPasswordRef.current.value.length === 0
     ) {
-      errorMessage();
+      errorMessage("Complete los campos faltantes");
+    } else if (passwordRef.current.value !== newPasswordRef.current.value) {
+      errorMessage("Las contraseñas no coinciden ");
     } else {
       successMessage();
-      historial.push("/");
+      setTimeout(() => historial.push("/"), 3000);
     }
     removeQue();
   };

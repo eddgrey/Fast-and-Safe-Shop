@@ -1,11 +1,11 @@
 import Producto from "./Producto";
 import { useEffect, useContext } from "react";
 import { ToastContainer, toast } from "react-toastify";
-import { productosContext } from "../context/ProductosContext";
+import { useProductos } from "../context/ProductosContext";
 import { messageToShowContext } from "../context/MessageToShowContext";
 
 const Home = () => {
-  const { productos } = useContext(productosContext);
+  const { productos } = useProductos();
   const { messageToShow, setMessageToShow } = useContext(messageToShowContext);
 
   useEffect(() => {
@@ -20,14 +20,17 @@ const Home = () => {
     <main className="w-full h-full ">
       <h2 className="text-blueGray-900 text-3xl px-10 pt-10">Ofertas</h2>
       <section className="flex flex-row justify-around flex-wrap w-full pt-6">
-        {productos.map(({ nombreProducto, precioProducto, imgProducto }) => (
-          <Producto
-            key={nombreProducto + precioProducto}
-            nombreProducto={nombreProducto}
-            precioProducto={precioProducto}
-            imgProducto={imgProducto}
-          />
-        ))}
+        {productos.map(
+          ({ nombreProducto, precioProducto, imgProducto, id }) => (
+            <Producto
+              key={id}
+              id={id}
+              nombreProducto={nombreProducto}
+              precioProducto={precioProducto}
+              imgProducto={imgProducto}
+            />
+          )
+        )}
       </section>
       <ToastContainer />
     </main>

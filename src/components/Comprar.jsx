@@ -1,8 +1,55 @@
-import React from "react";
-import box from "../img/box.png";
-import { Link } from "react-router-dom";
+/* eslint-disable react/prop-types */
+import React, { useContext } from "react";
+// import box from "../img/box.png";
+import { Link, useHistory } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import { messageToShowContext } from "../context/MessageToShowContext";
+import { useCarrito } from "../context/CarritoContext";
+import NumberFormat from "react-number-format";
+
+const ProductoComprar = ({ nombre, precio, img, cantidad }) => {
+  return (
+    <div className="flex-grow flex flex-row ml-4 mb-10">
+      <img src={img} alt="box" className=" w-20 object-cover"></img>
+      <div className="ml-4 flex flex-col justify-beetwen">
+        <em className="text-lg font-semibold">{nombre}</em>
+        <p className="font-medium b-2">{`Cantidad: ${cantidad}`}</p>
+        <strong className="text-blueGray-900">
+          Total:
+          <NumberFormat
+            value={precio}
+            displayType="text"
+            thousandSeparator={true}
+            prefix="$"
+            className="text-red-800"
+          />
+        </strong>
+        {/* <p className="text-sm text-blueGray-700 mb-2">
+          Vendido por <em>Nombre de la Tienda</em>{" "}
+        </p> */}
+      </div>
+    </div>
+  );
+};
 
 const Comprar = () => {
+  const historial = useHistory();
+  const {
+    productosEnCarrito,
+    setProductosEnCarrito,
+    productoComprarAhora,
+    totalCarrito,
+  } = useCarrito();
+  const { setMessageToShow } = useContext(messageToShowContext);
+  const notify = () => toast.info("Cargando...");
+
+  const handleComprar = () => {
+    notify();
+    setMessageToShow("La compra se ha realizado correctamente");
+    setProductosEnCarrito([]);
+    setTimeout(() => historial.push("/"), 3000);
+  };
+
   return (
     <section className="flex flex-row py-6 px-8 h-4/5 text-blueGray-900">
       <div className="w-4/5 mr-8">
@@ -43,44 +90,66 @@ const Comprar = () => {
                 <p className="text-blue-700 ml-24">Modificar</p>
               </Link>
             </div>
-            <p className="text-sm text-blueGray-500 pl-6 pt-3">
-              No demores en pagar, solo podemos reservarte stock cuando el pago
-              se acredite
-            </p>
           </div>
         </div>
         <div className="flex flex-col border border-blueGray-400 px-4 py-4 mt-8 bg-blueGray-100">
           <h2 className=" text-green-800 text-lg font-semibold mb-6">
             Fecha de entrega: ___________
           </h2>
-          <div className="flex-grow flex flex-row ml-4">
-            <img src={box} alt="box" className="w-14"></img>
-            <div className="ml-4 flex flex-col justify-beetwen">
-              <em className="text-lg font-semibold">Nombre del producto</em>
-              <strong className="text-red-800">$Precio</strong>
-              <p className="font-medium b-2">Cantidad: 1</p>
-              <p className="text-sm text-blueGray-700 mb-2">
-                Vendido por <em>Nombre de la Tienda</em>{" "}
-              </p>
-            </div>
-          </div>
+          {productoComprarAhora ? (
+            <ProductoComprar
+              nombre={productoComprarAhora.nombreProducto}
+              precio={productoComprarAhora.precioProducto}
+              img={productoComprarAhora.imgProducto}
+              cantidad={productoComprarAhora.cantidad}
+            />
+          ) : (
+            productosEnCarrito.map(
+              ({
+                id,
+                nombreProducto,
+                precioProducto,
+                imgProducto,
+                cantidad,
+              }) => (
+                <ProductoComprar
+                  key={id}
+                  nombre={nombreProducto}
+                  precio={precioProducto}
+                  img={imgProducto}
+                  cantidad={cantidad}
+                />
+              )
+            )
+          )}
         </div>
       </div>
       <div className="flex flex-col justify-around w-1/5 border border-blueGray-400 p-4 h-full mt-14 bg-blueGray-100">
-        <button className="button theme px-4 text-base mb-4">
+        <button
+          className="button theme px-4 text-base mb-4"
+          onClick={handleComprar}
+        >
           Confirmar compra
         </button>
         <h2 className=" font-semibold mb-4">Resumen del pedido</h2>
-        <p>
+        {/* <p>
           Productos: <strong className="ml-8">$0.00</strong>
         </p>
         <p>
           Envío: <strong className="ml-16">$0.00</strong>
-        </p>
-        <strong className="text-red-800 border-t-2 border-blueGray-500 text-xl pt-2 mt-2">
-          Total $0.0
+        </p> */}
+        <strong className="border-t-2 border-blueGray-500 text-xl pt-2 mt-2">
+          Total :
+          <NumberFormat
+            value={totalCarrito()}
+            displayType="text"
+            thousandSeparator={true}
+            prefix="$"
+            className="text-red-800 text-2xl ml-2"
+          />
         </strong>
       </div>
+      <ToastContainer />
     </section>
   );
 };

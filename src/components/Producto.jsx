@@ -3,10 +3,11 @@ import { Link } from "react-router-dom";
 import box from "../img/box.png";
 
 const Producto = ({
-  nombreProducto = "Nombre del producto",
-  precioProducto = "precio",
+  nombreProducto,
+  precioProducto,
   imgProducto = { box },
-  categoriaProducto = "deporte",
+  categoriaProducto,
+  id,
 }) => {
   return (
     <section className="producto">
@@ -29,6 +30,7 @@ const Producto = ({
               precioProducto,
               imgProducto,
               categoriaProducto,
+              id,
             },
           }}
         >

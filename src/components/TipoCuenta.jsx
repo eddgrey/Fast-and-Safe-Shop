@@ -1,22 +1,20 @@
-import { useContext } from "react";
 import Bienvenida from "./Bienvenida";
 import { useHistory } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
-import { tipoUsuarioContext } from "../context/TipoUsuarioContext";
 import comprador from "../img/comprador.png";
 import vendedor from "../img/vendedor.png";
+import { useState } from "react";
 
 const TipoCuenta = () => {
   const historial = useHistory();
 
-  const { tipoUsuario, setTipoUsuario } = useContext(tipoUsuarioContext);
+  const [tipoUsuario, setTipoUsuario] = useState();
   const successMessage = () => toast.success("Sucess");
   const errorMessage = () => toast.error("Seleccione un tipo de cuenta");
   const removeQue = () => toast.clearWaitingQueue();
 
   const handleSumbit = (e) => {
     e.preventDefault();
-    console.log(tipoUsuario);
     if (tipoUsuario === "vendedor" || tipoUsuario === "comprador") {
       successMessage();
       historial.push("/registro");
@@ -31,7 +29,10 @@ const TipoCuenta = () => {
       <form className="login" onSubmit={handleSumbit}>
         <h1 className="text-3xl mb-10">Tipo de cuenta</h1>
         <div className="flex flex-row w-full justify-around">
-          <div className="tipo-cuenta">
+          <div
+            className="tipo-cuenta"
+            onClick={() => setTipoUsuario("vendedor")}
+          >
             <img src={vendedor} alt="vendedor" />
             <input
               id="vendedor"
@@ -40,13 +41,15 @@ const TipoCuenta = () => {
               value="vendedor"
               className=""
               checked={tipoUsuario === "vendedor"}
-              onChange={(e) => setTipoUsuario(e.target.value)}
             />
             <label htmlFor="vendedor" className="ml-4">
               Vendedor
             </label>
           </div>
-          <div className="tipo-cuenta">
+          <div
+            className="tipo-cuenta"
+            onClick={() => setTipoUsuario("comprador")}
+          >
             <img src={comprador} alt="comprador" />
             <input
               id="comprador"
@@ -54,7 +57,6 @@ const TipoCuenta = () => {
               type="radio"
               value="comprador"
               checked={tipoUsuario === "comprador"}
-              onChange={(e) => setTipoUsuario(e.target.value)}
             />
             <label htmlFor="comprador" className="ml-4">
               Comprador

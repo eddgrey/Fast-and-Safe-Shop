@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useContext } from "react";
 
 export const carritoContext = createContext();
 
@@ -11,12 +11,33 @@ export const CarritoProvaider = ({ children }) => {
     //   categoriaProducto: "Computacion",
     // },
   ]);
+  const [total, setTotalCarrito] = useState(0);
+  const [productoComprarAhora, setProductoComprarAhora] = useState({});
+
+  const calcularTotalCarrito = () => {
+    let total = 0;
+    productosEnCarrito.forEach(
+      (producto) => (total += producto.precioProducto)
+    );
+    setTotalCarrito(total);
+  };
+
+  const totalCarrito = () => total;
 
   return (
     <carritoContext.Provider
-      value={{ productosEnCarrito, setProductosEnCarrito }}
+      value={{
+        productosEnCarrito,
+        setProductosEnCarrito,
+        productoComprarAhora,
+        setProductoComprarAhora,
+        totalCarrito,
+        calcularTotalCarrito,
+      }}
     >
       {children}
     </carritoContext.Provider>
   );
 };
+
+export const useCarrito = () => useContext(carritoContext);

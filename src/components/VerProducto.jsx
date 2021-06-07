@@ -3,7 +3,7 @@ import box from "../img/box.png";
 import { useHistory, useLocation } from "react-router-dom";
 import { useContext } from "react";
 import { tipoUsuarioContext } from "../context/TipoUsuarioContext";
-import { carritoContext } from "../context/CarritoContext";
+import { useCarrito } from "../context/CarritoContext";
 import { messageToShowContext } from "../context/MessageToShowContext";
 import { ToastContainer, toast } from "react-toastify";
 
@@ -16,11 +16,13 @@ const Box = () => {
 };
 
 const VerProducto = () => {
-  const { nombreProducto, precioProducto, imgProducto } = useLocation().state;
+  const { nombreProducto, precioProducto, imgProducto, id } =
+    useLocation().state;
+  const producto = useLocation().state;
   const { tipoUsuario } = useContext(tipoUsuarioContext);
   const { setMessageToShow } = useContext(messageToShowContext);
-  const { productosEnCarrito, setProductosEnCarrito } =
-    useContext(carritoContext);
+  const { productosEnCarrito, setProductosEnCarrito, setProductoComprarAhora } =
+    useCarrito();
   const historial = useHistory();
 
   const showMessage = () => toast.success("El producto se agrego al carrito");
@@ -31,6 +33,7 @@ const VerProducto = () => {
       setMessageToShow("Se necesita iniciar sesión");
       historial.push("/login");
     } else {
+      setProductoComprarAhora(producto);
       historial.push("/comprar");
     }
   };
@@ -40,10 +43,27 @@ const VerProducto = () => {
       setMessageToShow("Se necesita iniciar sesión");
       historial.push("/login");
     } else {
-      setProductosEnCarrito([
-        ...productosEnCarrito,
-        { nombreProducto, precioProducto, imgProducto },
-      ]);
+      const exist = productosEnCarrito.find((producto) => producto.id === id);
+
+      if (!exist) {
+        setProductosEnCarrito([
+          ...productosEnCarrito,
+          { nombreProducto, precioProducto, imgProducto, id, cantidad: 1 },
+        ]);
+      } else {
+        const nuevosProductos = productosEnCarrito.map((producto) => {
+          if (producto.id === id) {
+            return {
+              ...producto,
+              cantidad: parseInt(producto.cantidad) + 1,
+            };
+          } else {
+            return producto;
+          }
+        });
+
+        setProductosEnCarrito(nuevosProductos);
+      }
       showMessage();
     }
     removeQue();
@@ -73,9 +93,6 @@ const VerProducto = () => {
             <i className="fas fa-star" />
             <i className="fas fa-star" />
             <i className="fas fa-star" />
-            {/* <p className="text-xs text-blueGray-500 ml-2">
-              Número de opiniones
-            </p> */}
           </div>
         </div>
         <div>
@@ -100,15 +117,6 @@ const VerProducto = () => {
             Agregar al carrito
           </button>
         </div>
-
-        {/* <div className="flex flex-col border border-blueGray-300 p-4">
-          <p className="text-xl font-light text-center mb-4">
-            Información de la tienda
-          </p>
-          <em className="mb-2">Nombre tienda</em>
-          <em className="mb-2">Número de ventas</em>
-          <p className="text-sm text-blue-800">Ver más datos de la tienda</p>
-        </div> */}
       </div>
       <ToastContainer limit={1} />
     </section>

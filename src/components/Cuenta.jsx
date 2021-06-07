@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React, { useContext } from "react";
+import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { tipoUsuarioContext } from "../context/TipoUsuarioContext";
 
@@ -62,7 +62,7 @@ const Cuenta = () => {
             </h3>
             <div className="seccion-cuenta">
               <p>Tarjeta</p>
-              <Link to="domicilio">
+              <Link to="/tarjetas">
                 <p className="m-4 text-blue-800 text-right">Agregar tarjeta</p>
               </Link>
             </div>

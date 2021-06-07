@@ -1,10 +1,20 @@
-import React, { useContext } from "react";
+import { useContext, useEffect } from "react";
+import { messageToShowContext } from "../context/MessageToShowContext";
 import { productosContext } from "../context/ProductosContext";
-// import { Link } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 import ProductoLista from "./ProductoLista";
 
 const MisProductos = () => {
   const { productos } = useContext(productosContext);
+  const { messageToShow, setMessageToShow } = useContext(messageToShowContext);
+
+  useEffect(() => {
+    if (messageToShow.length > 0) {
+      (() => toast.success(messageToShow))();
+      setTimeout(setMessageToShow(""), 1000);
+    }
+  }, []);
+
   return (
     <div>
       <section className="lista-productos">
@@ -13,9 +23,10 @@ const MisProductos = () => {
         {productos.length > 0 ? (
           <>
             {productos.map(
-              ({ nombreProducto, precioProducto, imgProducto }) => (
+              ({ nombreProducto, precioProducto, imgProducto, id }) => (
                 <ProductoLista
-                  key={nombreProducto + "1"}
+                  key={id}
+                  id={id}
                   nombreProducto={nombreProducto}
                   precioProducto={precioProducto}
                   imgProducto={imgProducto}
@@ -28,6 +39,7 @@ const MisProductos = () => {
           <p>No tiene productos</p>
         )}
       </section>
+      <ToastContainer />
     </div>
   );
 };

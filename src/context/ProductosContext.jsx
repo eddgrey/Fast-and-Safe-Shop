@@ -5,7 +5,7 @@ import caminadora from "../img/caminadora.jpg";
 import tablet from "../img/tabletSamsung.jpg";
 import cama from "../img/cama.jpg";
 
-import { createContext, useState } from "react";
+import { createContext, useState, useContext } from "react";
 
 export const productosContext = createContext();
 
@@ -14,47 +14,60 @@ export const ProductosProvaider = ({ children }) => {
   const [productos, setProductos] = useState([
     {
       nombreProducto: "Smart TV Hisense 43H6500G LED 4K 43' 120V",
-      precioProducto: "7,599",
+      id: 1,
+      precioProducto: 7599,
       categoriaProducto: "Tecnologia",
       imgProducto: smartTv,
     },
     {
       nombreProducto: "Laptop Lenovo V-Series V14-IIL, 8GB de RAM 1TB HDD",
-      precioProducto: "12,499",
+      id: 2,
+      precioProducto: 12499,
       categoriaProducto: "Computación",
       imgProducto: laptop,
     },
     {
       nombreProducto: "Xiaomi Poco X3 NFC Dual SIM 128 GB cobalt blue 6 GB RAM",
-      precioProducto: "5,131",
+      id: 3,
+      precioProducto: 5131,
       categoriaProducto: "Celulares",
       imgProducto: pocoX3,
     },
     {
       nombreProducto:
         "Caminadora eléctrica Centurfit MKZ-CAML515 110V - 120V negra",
-      precioProducto: "6,199",
+      id: 4,
+      precioProducto: 6199,
       categoriaProducto: "Deporte",
       imgProducto: caminadora,
     },
     {
       nombreProducto:
         "Tablet Samsung Galaxy Tab A 2019 SM-T290 8' 32GB plata con 2GB de memoria RAM",
-      precioProducto: "2,399",
+      id: 5,
+      precioProducto: 2399,
       categoriaProducto: "Computación",
       imgProducto: tablet,
     },
     {
       nombreProducto: "Base Cama Urban Matrimonial - Base + Cabecera + 2 Buros",
-      precioProducto: "3,679",
+      id: 6,
+      precioProducto: 3679,
       categoriaProducto: "Muebles",
       imgProducto: cama,
     },
   ]);
 
+  const precioOriginalProducto = (id) =>
+    productos.filter((producto) => producto.id === id)[0].precioProducto;
+
   return (
-    <productosContext.Provider value={{ productos, setProductos }}>
+    <productosContext.Provider
+      value={{ productos, setProductos, precioOriginalProducto }}
+    >
       {children}
     </productosContext.Provider>
   );
 };
+
+export const useProductos = () => useContext(productosContext);

@@ -1,12 +1,14 @@
 /* eslint-disable react/prop-types */
-import { useContext } from "react";
+
 import { Link } from "react-router-dom";
-import { carritoContext } from "../context/CarritoContext";
-import ProductoLista from "./ProductoLista";
-// import box from "../img/box.png";
+import { useCarrito } from "../context/CarritoContext";
+import NumberFormat from "react-number-format";
+import { useProductos } from "../context/ProductosContext";
+import ProductoCarrito from "./ProductoCarrito";
 
 const Carrito = () => {
-  const { productosEnCarrito } = useContext(carritoContext);
+  const { productosEnCarrito, totalCarrito } = useCarrito();
+  const { precioOriginalProducto } = useProductos();
 
   return (
     <section className="mx-auto mt-10 w-11/12 min-h-screen  py-6 px-10 bg-blueGray-100 text-blueGray-900">
@@ -15,19 +17,26 @@ const Carrito = () => {
       {productosEnCarrito.length > 0 ? (
         <>
           {productosEnCarrito.map(
-            ({ nombreProducto, precioProducto, imgProducto }) => (
-              <ProductoLista
-                key={nombreProducto + "1"}
+            ({ nombreProducto, precioProducto, imgProducto, id, cantidad }) => (
+              <ProductoCarrito
+                key={id}
+                id={id}
                 nombreProducto={nombreProducto}
-                precioProducto={precioProducto}
+                precioProducto={precioOriginalProducto(id)}
+                precioEnCarrito={precioProducto}
+                cantidadProducto={cantidad}
                 imgProducto={imgProducto}
-                tipoProducto="carrito"
               />
             )
           )}
           <div className="total-carrito">
-            <p className=" mr-40">Total con envío</p>
-            <p>$Total</p>
+            <p className=" mr-40">Total</p>
+            <NumberFormat
+              value={totalCarrito()}
+              displayType="text"
+              thousandSeparator={true}
+              prefix="$"
+            />
           </div>
           <div className="flex flex-row justify-end pt-8">
             <Link to="/comprar">
@@ -36,7 +45,7 @@ const Carrito = () => {
           </div>
         </>
       ) : (
-        <p className="mt-20 text-center">Carrito vacio</p>
+        <p className="mt-20 text-center">Carrito vacío</p>
       )}
     </section>
   );

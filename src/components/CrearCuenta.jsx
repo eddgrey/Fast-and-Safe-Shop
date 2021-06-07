@@ -3,7 +3,6 @@ import Bienvenida from "./Bienvenida";
 import { useHistory } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import { useRef } from "react";
-// import { tipoUsuarioContext } from "../context/TipoUsuarioContext";
 
 const CrearCuenta = () => {
   const nombreRef = useRef(null);

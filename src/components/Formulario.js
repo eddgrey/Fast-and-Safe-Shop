@@ -10,9 +10,13 @@ const Formulario = () => {
       setIsSubmitted(true);
   }
 
+  const addComprador = () =>{
+    console.log("nuevo comprador");
+  }
+
   return (
     <div>
-    {!isSubmitted ? <CrearCuenta submitForm = {submitForm}/> : <CuentaExitosa />}
+    {!isSubmitted ? <CrearCuenta addOrEdit={addComprador} submitForm = {submitForm}/> : <CuentaExitosa />}
     </div>
   );
 };

@@ -26,7 +26,7 @@ import Tarjetas from "./components/Tarjetas";
 import Usuarios from "./components/Usuarios";
 import Formulario from "./components/Formulario";
 
-const App = () => {
+function App() {
   return (
     <TipoUsuarioProvaider>
       <ProductosProvaider>
@@ -64,6 +64,6 @@ const App = () => {
       </ProductosProvaider>
     </TipoUsuarioProvaider>
   );
-};
+}
 
 export default App;

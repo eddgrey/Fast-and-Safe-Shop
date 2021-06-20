@@ -14,6 +14,7 @@ const useForm = (callback, validate) => {
   const [isSubmitting, setIsSubmitting] = useState (false);
 
   const handleChange = e => {
+    //console.log(e.target.value);
     setValues({
       ...values,
       [e.target.name]: e.target.value,
@@ -22,6 +23,7 @@ const useForm = (callback, validate) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log(values);
     setErrors(validate(values));
     setIsSubmitting(true);
   };

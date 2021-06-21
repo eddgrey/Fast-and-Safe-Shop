@@ -1,11 +1,21 @@
 /* eslint-disable react/prop-types */
 
-import { createContext, useState } from "react";
+import { createContext, useContext, useState } from "react";
 
 export const tipoUsuarioContext = createContext();
 
 export const TipoUsuarioProvaider = ({ children }) => {
   const [tipoUsuario, setTipoUsuario] = useState("noRegistrado");
+  // const entrega = format(sub(new Date(), { days: 4 }), "dd 'de' MMM 'de' yyyy");
+  const [compras, setCompras] = useState([]);
+
+  const [direccion, setDireccion] = useState({
+    nombre: "",
+    calle: "",
+    cp: "",
+    tel: "",
+  });
+
   const u = [
     {
       nombre: "administrador",
@@ -29,10 +39,21 @@ export const TipoUsuarioProvaider = ({ children }) => {
       productos: [],
     },
   ];
-  console.log(tipoUsuario, u);
   return (
-    <tipoUsuarioContext.Provider value={{ tipoUsuario, setTipoUsuario }}>
+    <tipoUsuarioContext.Provider
+      value={{
+        tipoUsuario,
+        setTipoUsuario,
+        compras,
+        setCompras,
+        u,
+        direccion,
+        setDireccion,
+      }}
+    >
       {children}
     </tipoUsuarioContext.Provider>
   );
 };
+
+export const useUsuario = () => useContext(tipoUsuarioContext);

@@ -1,4 +1,5 @@
 /* eslint-disable react/prop-types */
+import NumberFormat from "react-number-format";
 import { Link } from "react-router-dom";
 import box from "../img/box.png";
 
@@ -18,7 +19,12 @@ const Producto = ({
         className="border-b border-blueGray-500  object-scale-down p-4 h-48"
       />
       <strong className="text-xl text-blueGray-900 mt-4">
-        $ {precioProducto}
+        <NumberFormat
+          value={precioProducto}
+          thousandSeparator={true}
+          prefix="$"
+          displayType="text"
+        />
       </strong>
       <h2 className="text-blueGray-700 text-sm mb-2">{nombreProducto}</h2>
       <p className="hidden">{categoriaProducto}</p>

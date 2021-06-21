@@ -1,7 +1,9 @@
-.link_login:hover{
-    color:yellow;
+.link_login:hover {
+  color: yellow;
 }
 
-.alerta{
-    color: red;
+.alerta {
+  color: #ef4444;
+  font-size: 0.9rem;
+  letter-spacing: 0.05rem;
 }

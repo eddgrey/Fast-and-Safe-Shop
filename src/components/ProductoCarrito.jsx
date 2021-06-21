@@ -56,7 +56,11 @@ const ProductoCarrito = ({
               className="bg-white h-full w-20 text-xl text-center"
               type="number"
               value={cantidad}
-              onChange={(e) => setCantidad(e.target.value)}
+              onChange={(e) =>
+                Math.sign(cantidad) !== 1
+                  ? setCantidad(1)
+                  : setCantidad(e.target.value)
+              }
               min={1}
               max={40}
             ></input>

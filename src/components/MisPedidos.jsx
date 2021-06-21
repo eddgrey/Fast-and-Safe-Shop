@@ -1,9 +1,7 @@
-import React, { useContext } from "react";
-import { productosContext } from "../context/ProductosContext";
+import { useUsuario } from "../context/TipoUsuarioContext";
 import ProductoLista from "./ProductoLista";
-
 const MisPedidos = () => {
-  const { productos } = useContext(productosContext);
+  const { compras } = useUsuario();
   return (
     <div>
       <section className="lista-productos">
@@ -12,22 +10,25 @@ const MisPedidos = () => {
           <h2 className="text-2xl font-medium">Estado</h2>
         </div>
 
-        {productos.length > 0 ? (
-          <>
-            {productos.map(
-              ({ nombreProducto, precioProducto, imgProducto }) => (
-                <ProductoLista
-                  key={nombreProducto + "1"}
-                  nombreProducto={nombreProducto}
-                  precioProducto={precioProducto}
-                  imgProducto={imgProducto}
-                  tipoProducto="pedido"
-                />
-              )
-            )}
-          </>
+        {compras.length > 0 ? (
+          compras.map(
+            (
+              { total, fechaEntrega, productos, direccion, metodoPago },
+              index
+            ) => (
+              <ProductoLista
+                key={index}
+                nombre={`Pedido ${index + 1}`}
+                total={total}
+                fechaEntrega={fechaEntrega}
+                productos={productos}
+                direccion={direccion}
+                metodoPago={metodoPago}
+              />
+            )
+          )
         ) : (
-          <p>No ha realizado ninguna compra</p>
+          <p className="mt-10 font-medium">No ha realizado ninguna compra</p>
         )}
       </section>
     </div>

@@ -6,6 +6,7 @@ import { tipoUsuarioContext } from "../context/TipoUsuarioContext";
 import { useCarrito } from "../context/CarritoContext";
 import { messageToShowContext } from "../context/MessageToShowContext";
 import { ToastContainer, toast } from "react-toastify";
+import NumberFormat from "react-number-format";
 
 const Box = () => {
   return (
@@ -96,9 +97,13 @@ const VerProducto = () => {
           </div>
         </div>
         <div>
-          <strong className="text-3xl font-light mb-1">
-            $ {precioProducto}
-          </strong>
+          <NumberFormat
+            value={precioProducto}
+            prefix="$"
+            thousandSeparator={true}
+            displayType="text"
+            className="text-3xl mb-1 font-medium"
+          />
         </div>
         <div className="text-lg">Descripción del producto</div>
       </div>

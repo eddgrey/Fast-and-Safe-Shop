@@ -25,7 +25,7 @@ const Login = () => {
   }, []);
 
   const notify = () =>
-    (messageId.current = toast.info("Cargando...", { autoClose: 3000 }));
+    (messageId.current = toast.info("Cargando...", { autoClose: 2000 }));
 
   const showError = () =>
     (messageId.current = toast.error("Complete los campos faltantes"));
@@ -34,7 +34,7 @@ const Login = () => {
     toast.update(messageId.current, {
       type: toast.TYPE.SUCCESS,
       render: "La operacion ha sido realizada correctamente.",
-      autoClose: 5000,
+      autoClose: 3000,
     });
 
   const removeQue = () => toast.clearWaitingQueue();
@@ -56,10 +56,10 @@ const Login = () => {
         setTipoUsuario("vendedor");
       }
       setMessageToShow("Bienvenido");
-      setTimeout(updateMessage, 4000);
+      setTimeout(updateMessage, 2000);
       setTimeout(
         () => historial.push(email === "admin@email.com" ? "/usuarios" : "/"),
-        2000
+        1500
       );
     }
     removeQue();

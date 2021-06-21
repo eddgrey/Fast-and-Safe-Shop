@@ -1,29 +1,21 @@
 import React from "react";
-import { useLocation } from "react-router";
-import laptop from "../img/laptop.jpg";
-// import { Link } from "react-router-dom";
+import NumberFormat from "react-number-format";
+import { Link, useLocation } from "react-router-dom";
+import Direccion from "./Direccion";
+import ProductoComprar from "./ProductoComprar";
 
 const EstadoCompra = () => {
-  const { estado } = useLocation().state;
+  const { productos, estado, total, fechaEntrega, metodoPago } =
+    useLocation().state;
+  const opcion = estado === "En camino" ? "Cancelado" : "";
+
   return (
     <section className="flex flex-row py-6 px-8 h-4/5 text-blueGray-900">
       <div className="w-4/5 mr-8">
         <strong className="text-2xl font-semibold">Resumen de compra</strong>
         <div className="border border-blueGray-400 mt-6 bg-blueGray-100">
-          <div className="w-1/2 px-4 py-4">
-            <h2 className="text-lg font-semibold">Domicilio</h2>
-            <div className="flex flex-row justify-between items-center mt-4">
-              <span className="text-blue-700 text-xl mx-8">
-                <i className="fas fa-map-marker-alt"></i>
-              </span>
-              <div>
-                <p className="font-normal">CP</p>
-                <p className="text-sm text-blueGray-500">Calle</p>
-                <p className="text-sm text-blueGray-500">Nombre</p>
-                <p className="text-sm text-blueGray-500">Tel.</p>
-              </div>
-            </div>
-          </div>
+          <Direccion modificar={false} />
+
           <div className="w-1/2 px-4 py-4">
             <h2 className="text-lg font-semibold ">Método de pago</h2>
             <div className="flex flex-row justify-between items-center mt-6">
@@ -31,48 +23,58 @@ const EstadoCompra = () => {
                 <i className="far fa-credit-card"></i>
               </span>
               <div>
-                <em>Nombre del método de pago</em>
-                {/* <p className="text-sm text-blueGray-500">
-                  El pago se hará a través de...
-                </p> */}
+                <em>{metodoPago.metodo}</em>
               </div>
             </div>
           </div>
         </div>
         <div className="flex flex-col border border-blueGray-400 px-4 py-4 mt-8 bg-blueGray-100">
           <h2 className=" text-green-800 text-lg font-semibold mb-6">
-            Fecha de entrega: ___________
+            Fecha de entrega: {fechaEntrega}
           </h2>
-          <div className="flex-grow flex flex-row ml-4">
-            <img
-              src={laptop}
-              alt="laptop"
-              className=" object-scale-down w-40"
-            ></img>
-            <div className="ml-4 flex flex-col justify-beetwen">
-              <em className="text-lg font-semibold">Nombre del producto</em>
-              <strong className="text-red-800">$Precio</strong>
-              <p className="font-medium b-2">Cantidad: 1</p>
-              <p className="text-sm text-blueGray-700 mb-2">
-                Vendido por <em>Nombre de la Tienda</em>{" "}
-              </p>
-            </div>
+          <div>
+            {productos.map(
+              ({
+                id,
+                nombreProducto,
+                precioProducto,
+                imgProducto,
+                cantidad,
+              }) => (
+                <ProductoComprar
+                  key={id}
+                  nombre={nombreProducto}
+                  precio={precioProducto}
+                  img={imgProducto}
+                  cantidad={cantidad}
+                />
+              )
+            )}
           </div>
         </div>
       </div>
       <div className="flex flex-col justify-around w-1/5 border border-blueGray-400 p-4 h-full mt-14 bg-blueGray-100">
-        <button className="button theme px-4 text-base mb-4">
-          {estado === "Entregado" ? "Devolver producto" : "Cancelar Pedido"}
-        </button>
-        {/* <h2 className=" font-semibold mb-4">Total</h2> */}
-        <p>
-          Productos: <strong className="ml-8">$0.00</strong>
-        </p>
-        <p>
-          Envío: <strong className="ml-16">$0.00</strong>
-        </p>
-        <strong className="text-red-800 border-t-2 border-blueGray-500 text-xl pt-2 mt-2">
-          Total $0.0
+        <Link
+          to={{
+            pathname: "/mis-pedidos",
+            state: {
+              opcion,
+            },
+          }}
+          className="button theme px-4 text-base mb-4"
+        >
+          <p>Devolver producto</p>
+        </Link>
+
+        <strong className="border-t-2 border-blueGray-500 text-xl pt-2 mt-2">
+          Total :
+          <NumberFormat
+            value={total}
+            displayType="text"
+            thousandSeparator={true}
+            prefix="$"
+            className="text-red-800 text-2xl ml-2"
+          />
         </strong>
       </div>
     </section>

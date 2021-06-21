@@ -1,12 +1,25 @@
-import React from "react";
+import React, { useRef } from "react";
 import { useHistory } from "react-router-dom";
+import { useUsuario } from "../context/TipoUsuarioContext";
 import FormField from "./FormField";
 
 const Domicilio = () => {
   const historial = useHistory();
+  const refNombre = useRef(null);
+  const refCP = useRef(null);
+  const refCalle = useRef(null);
+  const refTel = useRef(null);
+
+  const { setDireccion } = useUsuario();
 
   const handleSumbit = (e) => {
     e.preventDefault();
+    setDireccion({
+      nombre: refNombre.current.value,
+      calle: refCalle.current.value,
+      cp: refCP.current.value,
+      tel: refTel.current.value,
+    });
     historial.goBack();
   };
 
@@ -23,6 +36,7 @@ const Domicilio = () => {
           type="text"
           size="large"
           theme="light"
+          refInput={refNombre}
         />
 
         <FormField
@@ -31,6 +45,7 @@ const Domicilio = () => {
           type="text"
           size="large"
           theme="light"
+          refInput={refCP}
         />
 
         <div className="flex flex-row w-full justify-between ">
@@ -58,6 +73,7 @@ const Domicilio = () => {
             type="text"
             size="medium"
             theme="light"
+            refInput={refCalle}
           />
 
           <FormField
@@ -76,6 +92,7 @@ const Domicilio = () => {
             type="text"
             size="medium"
             theme="light"
+            refInput={refTel}
           />
 
           <FormField

@@ -1,6 +1,9 @@
 /* eslint-disable react/prop-types */
-import { useContext, useRef, useEffect } from "react";
+/* eslint-disable */
+import React, { useContext, useRef, useEffect, Component } from "react";
 import { Link, useHistory } from "react-router-dom";
+import Swal from 'sweetalert2';
+import Constantes from '../Constantes.js';
 import { tipoUsuarioContext } from "../context/TipoUsuarioContext";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -8,103 +11,138 @@ import Bienvenida from "./Bienvenida";
 import FormField from "./FormField";
 import { messageToShowContext } from "../context/MessageToShowContext";
 
-const Login = () => {
-  const { setTipoUsuario } = useContext(tipoUsuarioContext);
-  const { messageToShow, setMessageToShow } = useContext(messageToShowContext);
-  const emailRef = useRef(null);
-  const passwordRef = useRef(null);
-  const historial = useHistory();
-  const messageId = useRef(null);
+class Login extends React.Component {
+  constructor(props) {
 
-  useEffect(() => {
-    console.log(messageToShow);
-    if (messageToShow.length > 0) {
-      (() => toast.info(messageToShow))();
-      setTimeout(setMessageToShow(""), 5000);
+    super(props);
+    this.state = {
+      usuario: {
+        email: '',
+        clave: ''
+      }
+
     }
-  }, []);
+    this.handleInput = this.handleInput.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
 
-  const notify = () =>
-    (messageId.current = toast.info("Cargando...", { autoClose: 3000 }));
+  async handleSubmit(e) {
+    
+    e.preventDefault();
+    console.log("hola");
+    const usuario = JSON.stringify(this.state.usuario);
+    const usuario_respuesta = await fetch(`${Constantes.RUTA_API}/Validate_User.php`, {
+        method: "POST",
+        body: usuario,
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        }
+    });
+    const json = await usuario_respuesta.json();
+    console.log(json);
+    if (json[0].sesion === false) {
+        toast.error('Contraseña incorrecta :( ', {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+        });
+    } else {
+        toast.success('Inicio de sesión con éxito 🎉🥳', {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+        });
 
-  const showError = () =>
-    (messageId.current = toast.error("Complete los campos faltantes"));
+        this.props.history.push({
+            pathname: "/",
+            state: {
+                email: this.state.usuario.email,
+                sesion: true
 
-  const updateMessage = () =>
-    toast.update(messageId.current, {
-      type: toast.TYPE.SUCCESS,
-      render: "La operacion ha sido realizada correctamente.",
-      autoClose: 5000,
+            }
+        });
+
+
+    }
+
+
+}
+
+handleInput(e) {
+    const clave = e.target.name;
+    let valor = e.target.value;
+    this.setState(state => {
+        const UsuarioNuevo = state.usuario;
+        UsuarioNuevo[clave] = valor;
+        return {
+            usuario: UsuarioNuevo,
+        }
+
     });
 
-  const removeQue = () => toast.clearWaitingQueue();
+}
 
-  const handleSumbit = (e) => {
-    e.preventDefault();
-    const email = emailRef.current.value;
-    const password = passwordRef.current.value;
 
-    if (email.length === 0 || password.length === 0) {
-      showError();
-    } else {
-      notify();
-      if (email === "admin@email.com") {
-        setTipoUsuario("administrador");
-      } else if (email === "comprador@email.com") {
-        setTipoUsuario("comprador");
-      } else {
-        setTipoUsuario("vendedor");
-      }
-      setMessageToShow("Bienvenido");
-      setTimeout(updateMessage, 4000);
-      setTimeout(
-        () => historial.push(email === "admin@email.com" ? "/usuarios" : "/"),
-        2000
-      );
-    }
-    removeQue();
-  };
+  render() {
+    const rowForm = "w-full h-screen flex flex-row bg-blueGray-800";
+    const labelForm = "w-1/4 text-sm uppercase tracking-wide";
+    const separate = "flex flex-row w-full mb-2 justify-between";
+    const inputForm = "input-dark pl-2  w-3/4 ";
 
-  return (
-    <section className="w-screen min-h-screen flex flex-row bg-blueGray-800">
-      <form onSubmit={handleSumbit} className="login">
-        <p className=" text-3xl mb-10">Iniciar sesión</p>
-        <div className="w-3/4">
-          <FormField
-            id="email"
-            label="Correo electrónico: "
-            type="email"
-            size="large"
-            refInput={emailRef}
-          />
+    return (
+      <section className={rowForm}>
+        <ToastContainer></ToastContainer>
+        <form className="login" onSubmit={this.handleSubmit}>
+          <p className=" text-3xl mb-3">Iniciar sesión</p>
+          <div className={separate}>
+            <label className={labelForm}>Correo electrónico: *</label>
+            <input
+              className={inputForm}
+              id="correo"
+              type="texto"
+              name="email"
+              required
+              value={this.state.usuario.correo}
+              onChange={this.handleInput}
+            />
+          </div>
 
-          <FormField
-            id="password"
-            label="Contraseña: "
-            type="password"
-            size="large"
-            refInput={passwordRef}
-          />
-        </div>
+          <div className={separate}>
+            <label className={labelForm}>Contraseña: *</label>
+            <input
+              className={inputForm}
+              id="clave"
+              type="password"
+              name="clave"
+              required
+              value={this.state.usuario.clave}
+              onChange={this.handleInput}
+            />
+          </div>
 
-        <span className="otro_link">
-          ¿No tienes cuenta? Crea una
-          <Link className="link_login" to="/registro">
-            Aquí
-          </Link>
-        </span>
-        <button className="button theme" type="submit">
-          Continuar
-        </button>
-
-        <Link to="/recuperar">
-          <p className="text-sm">¿Olvidó su contraseña?</p>
-        </Link>
-      </form>
-      <Bienvenida message="Iniciar sesión para continuar" />
-      <ToastContainer limit={1} />
-    </section>
-  );
+          <span className="otro_link">
+            ¿No tienes cuenta? Registrate
+            <Link className="link_login" to="/CrearCuenta">
+              Aquí
+            </Link>
+          </span>
+          <button className="button theme" type="submit">
+            Continuar
+          </button>
+        </form>
+        <Bienvenida message="Crear nueva cuenta para continuar" />
+      </section>
+    );
+  }
 };
 
 export default Login;

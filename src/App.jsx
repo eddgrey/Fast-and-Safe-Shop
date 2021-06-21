@@ -24,7 +24,7 @@ import MisPedidos from "./components/MisPedidos";
 import EstadoCompra from "./components/EstadoCompra";
 import Tarjetas from "./components/Tarjetas";
 import Usuarios from "./components/Usuarios";
-import Formulario from "./components/Formulario";
+import CrearCuenta from "../src/components/CrearCuenta.jsx";
 
 const App = () => {
   return (
@@ -38,7 +38,7 @@ const App = () => {
                 <Switch>
                   <Route exact path="/" component={Home} />
                   <Route path="/login" component={Login} />
-                  <Route path="/registro" component={Formulario} />
+                  <Route path="/registro" component={CrearCuenta} />
                   <Route path="/nuevo-password" component={NuevoPassword} />
                   <Route path="/Catalogo" component={Catalogo} />
                   <Route path="/ver-producto" component={VerProducto} />

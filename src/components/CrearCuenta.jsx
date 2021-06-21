@@ -214,27 +214,24 @@ handleInput(e) {
 
           <div className={separate}>
             <label className={labelForm}>Contraseña: *</label>
-            <select
+            <input
               className={inputForm}
-              id="clave"
               type="password"
               name="clave"
               required
+              id="clave"
               value={this.state.usuario.clave}
               onChange={this.handleInput}
             />
           </div>
 
           <div className={separate}>
-            <label className={labelForm}>Contraseña: *</label>
+            <label className={labelForm}>Confirmar Contraseña: *</label>
             <input
               className={inputForm}
-              id="clave"
               type="password"
               name="clave"
               required
-              value={this.state.usuario.clave}
-              onChange={this.handleInput}
             />
           </div>
 
